@@ -40,7 +40,7 @@ export const portfolios: Portfolio[] = [
       'Responsive Design',
     ],
     sourceUrl: 'https://github.com/source-code-examples',
-    preview: 'https://github.com/source-code-examples',
+    preview: 'https://pixelstack-me.vercel.app/',
     imageSrc: '/portfolio-img/portfolio-fullstack.png',
   },
   {

@@ -12,7 +12,45 @@
 This is an animated and responsive portfolio for web apps. It's built with **Next.js**, **TypeScript**, **React**, **Tailwind CSS** and **Framer Motion**.
 Features: portfolio showcase, blog system, contact form, profile page and dark/light mode.
 
-## 📑 Table of Contents
+## Live Demo
+
+Check out the live demo of the project here:
+
+→ **https://pixelstack-me.vercel.app/**
+
+## Preview / Screenshots
+
+<p align="center">
+<img src="public/preview/homepage.png" width="700" alt="Homepage preview" />
+<br />
+<em>Homepage with animated hero section</em>
+</p>
+
+<p align="center">
+<img src="public/preview/portfolio-page.png" width="700" alt="Portfolio page preview" />
+<br />
+<em>Portfolio page showcasing projects and tech stack</em>
+</p>
+
+<p align="center">
+<img src="public/preview/contact-page.png" width="700" alt="Contact page preview" />
+<br />
+<em>Contact form with API integration</em>
+</p>
+
+<p align="center">
+<img src="public/preview/skills-page.png" width="700" alt="Skills page preview" />
+<br />
+<em>Profile & skills section with animated progress bars</em>
+</p>
+
+<p align="center">
+<img src="public/preview/darkmode.png" width="700" alt="Dark mode preview" />
+<br />
+<em>Dark mode theme using custom ThemeContext</em>
+</p>
+
+## Table of Contents
 
 - [Features](#features)
   - [Modern UI & UX](#modern-ui--ux)

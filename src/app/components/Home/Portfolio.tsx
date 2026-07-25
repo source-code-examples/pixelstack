@@ -8,7 +8,7 @@ import { AiFillGithub } from 'react-icons/ai'
 import { HiOutlineGlobeAlt } from 'react-icons/hi'
 
 const Portfolio = () => {
-  // Limit the displayed portfolio items to the first 5
+  // Limit the displayed portfolio items to the first 3
   const limitedPortfolio = portfolios.slice(0, 3)
 
   return (

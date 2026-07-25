@@ -12,7 +12,7 @@ export const portfolios: Portfolio[] = [
 
     // Short description of the project
     overview:
-      'A full-stack real estate platform featuring property browsing, filtering, favorites, email contact, admin dashboard, and multilingual support (EN/DE) – built with React, Node.js, Express, PostgreSQL, Supabase Auth and Resend',
+      'A full-stack real estate platform featuring property browsing, filtering, favorites, email contact, admin dashboard, and multilingual support (EN/DE) – built with React, Node.js, Express, PostgreSQL, Supabase Auth and Resend.',
 
     // How the project works
     howItWorks: `HomeSphere is a full-stack real estate platform. Here's how it works:
@@ -102,7 +102,7 @@ export const portfolios: Portfolio[] = [
     name: 'Linguify',
 
     overview:
-      'A client‑side web application for multilingual text processing, featuring translation, synonym lookup, and automation settings. Built with React, TailwindCSS, and Vite, it consumes external language APIs and stores user preferences locally via localStorage',
+      'A web app for multilingual text processing, featuring live translation, synonym lookup, auto settings and AI Post-Editing. It consumes external language APIs and stores user preferences locally via localStorage and translation history in Supabase DB.',
 
     howItWorks: `Linguify is a client-side web application for multilingual text processing. Here's how it works:
 
@@ -117,12 +117,12 @@ export const portfolios: Portfolio[] = [
       'Vite',
       'TailwindCSS',
       'React Router',
-      'Context API',
-      'Custom Hooks',
+      'AI Integration',
+      'Express',
+      'Rest APIs',
       'Jest',
       'React Testing Library',
-      'REST APIs',
-      'localStorage',
+      'GitHub Actions (CI/CD)',
     ],
 
     fullTechStack: [
@@ -133,16 +133,20 @@ export const portfolios: Portfolio[] = [
       'Context API',
       'Custom Hooks',
       'Framer Motion',
+      'Phosphor Icons',
+      'React Icons',
       'Web Speech API',
+      'localStorage',
       'DeepSeek v4 Flash (AI Post-Editing)',
+      'REST APIs (MyMemory Translation API, Datamuse API)',
+      'Resend API (email sending)',
       'Vercel Serverless Functions',
       'Express.js (local dev backend)',
       'Upstash Redis (rate limiting)',
-      'Resend API (email sending)',
-      'REST APIs (MyMemory Translation API, Datamuse API)',
-      'localStorage',
       'Jest 30+',
       'React Testing Library',
+      'ESLint 9',
+      'GitHub Actions (CI: lint, audit, tests)',
       'Vercel',
     ],
 
@@ -157,7 +161,7 @@ export const portfolios: Portfolio[] = [
   {
     name: 'PixelStack Portfolio',
     overview:
-      'An animated and responsive portfolio with Next.js, TypeScript, Tailwind CSS, Framer Motion, PostgreSQL, Resend, and DeepSeek AI – featuring a blog, contact form, newsletter, search, dark mode, and an AI assistant that prefills the contact form',
+      'An animated and responsive portfolio with Next.js, TypeScript, Tailwind CSS, Framer Motion, PostgreSQL, Resend, and DeepSeek AI – featuring a blog, contact form, newsletter, search, dark mode, and an AI assistant that prefills the contact form.',
     howItWorks: `PixelStack is a full‑stack portfolio platform with dynamic content, AI assistance, and real email delivery. Here’s how it works:
 
       1. Portfolio & Projects – Explore showcased apps with descriptions, tech stacks and live links

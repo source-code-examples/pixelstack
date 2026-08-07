@@ -206,14 +206,16 @@ const Portfolio = () => {
                   <span>Tech Stack</span>
                 </button>
               )}
-              <Link
-                href={portfolio.preview}
-                target="_blank"
-                className="text-secondary flex items-center gap-1 transition-colors hover:text-cyan-500"
-              >
-                <HiOutlineGlobeAlt className="h-6 w-6" />
-                <span>Preview</span>
-              </Link>
+              {portfolio.preview && (
+                <Link
+                  href={portfolio.preview}
+                  target="_blank"
+                  className="text-secondary flex items-center gap-1 transition-colors hover:text-cyan-500"
+                >
+                  <HiOutlineGlobeAlt className="h-6 w-6" />
+                  <span>Preview</span>
+                </Link>
+              )}
               <Link
                 href={portfolio.sourceUrl}
                 target="_blank"

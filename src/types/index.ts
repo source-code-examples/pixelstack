@@ -19,7 +19,7 @@ export interface Portfolio {
   name: string
   overview: string
   techStack: string[]
-  preview: string
+  preview?: string
   sourceUrl: string
   fullTechStack?: string[]
   showFullTechStack?: boolean

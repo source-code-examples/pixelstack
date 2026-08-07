@@ -1,5 +1,5 @@
 import { AiOutlineCloudSync, AiOutlineRobot } from 'react-icons/ai'
-import { BsColumnsGap, BsDatabaseGear } from 'react-icons/bs'
+import { BsColumnsGap, BsDatabaseGear, BsRobot } from 'react-icons/bs'
 import { RiCodeBoxLine } from 'react-icons/ri'
 import { FiPenTool } from 'react-icons/fi'
 
@@ -30,12 +30,24 @@ export const education = [
     ],
   },
   {
+    title: 'Building AI Agents and Agentic Workflows',
+    icon: BsRobot,
+    org: 'IBM',
+    time: '2026',
+    points: [
+      'Agentic AI with LangGraph (memory, iteration, logic)',
+      'Autonomous agents with reasoning and feedback loops',
+      'Multi‑agent workflows using CrewAI orchestration',
+      'Conversation‑driven agents with AutoGen (AG2) and BeeAI',
+    ],
+  },
+  {
     title: 'AI Agents in Typescript/Javascript',
     icon: AiOutlineRobot,
     org: 'Vanderbilt University',
     time: '2026',
     points: [
-      'Building autonomous AI agents in TypeScript/JavaScript',
+      'Autonomous AI agents in TypeScript/JavaScript',
       'Agent architecture: reasoning, planning and tool use',
       'Prompt engineering for multi-step problem solving',
       'LLM integration across platforms',

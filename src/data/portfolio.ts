@@ -121,13 +121,16 @@ export const portfolios: Portfolio[] = [
     overview:
       'A full-stack web app for multilingual text work, featuring live translation, an interactive AI Studio for DeepSeek-powered post-editing, text-to-speech, synonym lookup, user accounts with a persisted translation history (Supabase), and a secure contact form.',
 
-    howItWorks: `Linguify is a client-side web application for multilingual text processing. Here's how it works:
+    howItWorks: `Linguify is a full-stack web application for multilingual text processing. Here's how it works:
 
       1. Translation – Enter text and select a target language to translate.
-      2. Synonym Lookup – Find alternative words for text revision.
-      3. Automation Features – Configure auto-clear and auto-copy in the settings.
-      4. Language Switching – Switch between supported languages with a single click.
-      5. AI Post‑Editing – Refine translations using Quick Actions or custom prompts with AI Studio`,
+      2. AI Studio – Refine translations using Quick Actions or custom prompts, powered by DeepSeek.
+      3. Text-to-Speech – Listen to input and output text read aloud in the selected language.
+      4. Synonym Lookup – Find alternative words for text revision.
+      5. User Accounts & History – Sign up or log in to automatically save every translation to your personal history. Try it with the test account (email: user@test.com / password: 123456) to explore Translator, Synonym Finder, and Settings without signing up.
+      6. Automation Features – Configure auto-clear, auto-copy, and live translation in the settings.
+      7. Language Switching – Switch between supported languages with a single click.
+      8. Contact – Reach out via a secure contact form.`,
 
     techStack: [
       'React',

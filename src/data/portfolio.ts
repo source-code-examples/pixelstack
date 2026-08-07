@@ -58,7 +58,7 @@ export const portfolios: Portfolio[] = [
 
     // Technologies used in the project
     techStack: [
-      'React 19',
+      'React',
       'React Router',
       'Node.js',
       'Express',
@@ -72,32 +72,35 @@ export const portfolios: Portfolio[] = [
 
     // Complete tech stack with all details (displayed in modal)
     fullTechStack: [
-      'React 19',
-      'React Router DOM 7',
-      'Vite 8',
+      'React',
+      'React Router DOM',
+      'JavaScript',
+      'TypeScript',
+      'CSS',
+      'Vite',
       'Node.js',
-      'Express 4',
+      'Express',
       'PostgreSQL (Supabase)',
       'Supabase Auth (JWT)',
       'DeepSeek (v4-flash)',
-      'LangGraph 1 + @langchain/core 1',
-      'Zod 4 (validation)',
-      'Multer 2 (file uploads)',
+      'LangGraph + @langchain/core',
+      'Zod (validation)',
+      'Multer (file uploads)',
       'Sharp 0.35 (image processing)',
-      'Helmet 8 (security headers)',
+      'Helmet (security headers)',
       'Resend',
-      'Yup 1',
-      'Phosphor Icons 1',
-      'Lucide Icons 1',
-      'react-i18next 15',
-      'Leaflet + react-leaflet 1 / 4',
-      'Framer Motion 12',
-      'Vitest 4 + React Testing Library 16',
-      'Supertest 7',
-      'CORS 2',
-      'dotenv 17',
-      'express-rate-limit 7',
-      'he (XSS sanitization) 1',
+      'Yup',
+      'Phosphor Icons',
+      'Lucide Icons',
+      'react-i18next',
+      'Leaflet + react-leaflet',
+      'Framer Motion',
+      'Vitest + React Testing Library',
+      'Supertest',
+      'CORS',
+      'dotenv',
+      'express-rate-limit',
+      'he (XSS sanitization)',
       'Render.com (Backend)',
       'Vercel (Frontend)',
       'Supabase (Database + Auth)',
@@ -132,6 +135,30 @@ export const portfolios: Portfolio[] = [
       7. Language Switching – Switch between supported languages with a single click.
       8. Contact – Reach out via a secure contact form.`,
 
+    caseStudy: `Project Period
+        February (planning phase and project set up), June - July 2026 (active development)
+        Goal
+        The goal was to build a full-stack multilingual text-processing app that goes beyond a simple translator: fast, free translation for everyday use, combined with an optional AI layer for higher-quality, context-aware refinement, plus supporting tools like text-to-speech, synonym lookup, and a personal translation history for registered users.
+        Technical Challenges
+        1. Keeping AI costs proportional to actual usage while still offering high-quality, DeepSeek-powered translation refinement
+        2. Implementing secure user authentication and enforcing per-user data access at the database level
+        3. Running the same backend logic (contact form, rate limiting) across two different environments: Vercel Serverless Functions in production and a local Express server in development
+        4. Minimizing unnecessary API calls during live translation while typing
+        5. Preventing render crashes and API/network failures from breaking the entire app
+        Solution & Technologies Used
+        I built a clean, cost-conscious architecture:
+        - Frontend: React 19 + Vite 7, TailwindCSS 4, React Router, Framer Motion, Context API + Custom Hooks
+        - Translation: MyMemory API for free, default translation; DeepSeek v4 Flash for optional, on-demand AI Post-Editing via a dedicated AI Studio
+        - Auth & Data: Supabase Auth (email/password) for user accounts, Supabase Postgres for translation history, secured entirely through Row Level Security (auth.uid() = user_id) instead of application-level checks
+        - Backend: Vercel Serverless Functions in production (api/contact.js, api/improve.js), a local Express.js server for development — sharing the same underlying service logic (shared/) to avoid duplicated code
+        - Additional Tools: Resend (email), Upstash Redis + express-rate-limit (rate limiting), Web Speech API (text-to-speech), Datamuse API (synonym lookup)
+        - Testing: Jest 30 + React Testing Library, enforced via a GitHub Actions CI workflow (lint, dependency audit, tests) on every push/PR
+
+        A key architectural decision was keeping AI usage cost-conscious by design: the free MyMemory API handles all default and live translation, while the paid DeepSeek API is only called when a user explicitly opens AI Studio. This keeps per-request AI costs proportional to actual demand for higher-quality output, rather than scaling with every keystroke or translation.
+        For live translation, I used a custom useDebounce hook to delay API calls until the user stops typing, reducing unnecessary requests without sacrificing responsiveness.
+        On the data side, translation history reads and writes go directly from the client to Supabase, with authorization enforced entirely at the database level via Row Level Security rather than through custom backend endpoints — reducing both backend surface area and the risk of authorization bugs.
+        An app-wide ErrorBoundary catches render crashes and shows a fallback instead of a blank screen, while API and network failures are handled inside custom hooks like useTranslator, so neither takes down the whole app.`,
+
     techStack: [
       'React',
       'Vite',
@@ -146,12 +173,13 @@ export const portfolios: Portfolio[] = [
     ],
 
     fullTechStack: [
-      'React 19+',
-      'Vite 7+',
-      'TailwindCSS 4+',
+      'React',
+      'JavaScript',
+      'TailwindCSS',
       'React Router',
       'Context API',
       'Custom Hooks',
+      'Vite',
       'Framer Motion',
       'Phosphor Icons',
       'React Icons',
@@ -166,9 +194,9 @@ export const portfolios: Portfolio[] = [
       'Vercel Serverless Functions',
       'Express.js (local dev backend)',
       'Upstash Redis (rate limiting)',
-      'Jest 30+',
+      'Jest',
       'React Testing Library',
-      'ESLint 9',
+      'ESLint',
       'GitHub Actions (CI: lint, audit, tests)',
     ],
 
@@ -207,41 +235,24 @@ export const portfolios: Portfolio[] = [
       'Jest',
     ],
     fullTechStack: [
-      // Core Framework & Language
-      'Next.js 16 (App Router)',
-      'TypeScript 5 (strict mode)',
-      'React 19',
-
-      // Styling & UI
-      'Tailwind CSS 4',
+      'Next.js',
+      'TypeScript',
+      'React',
+      'Tailwind CSS',
       'Framer Motion',
       'Heroicons',
       'React Icons',
-
-      // Database & ORM
       'PostgreSQL (hosted on Neon)',
-      'Prisma 7 (driver adapter via pg)',
-
-      // Authentication & Security
-      'Auth.js v5 (Credentials)',
+      'Prisma (driver adapter via pg)',
+      'Auth.js (Credentials)',
+      'Resend SDK',
       'bcryptjs (password hashing)',
-
-      // AI & Assistant
       'DeepSeek API (OpenAI-compatible)',
       'Tool Calling',
       'Intent Detection',
-
-      // Email & Communication
-      'Resend SDK',
-
-      // Markdown Rendering
       'react-markdown + remark-gfm + rehype-raw',
-
-      // Testing
       'Jest',
       'Playwright',
-
-      // Deployment
       'Vercel (deployment)',
       'IONOS (custom domain)',
     ],

@@ -155,7 +155,7 @@ const Portfolio = () => {
                   <HiOutlineInformationCircle className="h-5.5 w-5.5" />
                   {/* custom tooltip */}
                   <span className="absolute bottom-full left-9 -mb-2 -translate-x-1/2 rounded-lg bg-gray-900 px-2 py-1 text-[11px] font-medium whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-yellow-100 dark:text-black">
-                    How HomeSphere works
+                    How {portfolio.name} works
                     {/* small arrow */}
                     <span className="absolute top-full left-1/3 -translate-x-1/2 border-7 border-transparent border-t-gray-900 dark:border-t-yellow-100"></span>
                   </span>

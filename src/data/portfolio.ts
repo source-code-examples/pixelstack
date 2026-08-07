@@ -16,12 +16,16 @@ export const portfolios: Portfolio[] = [
 
     // How the project works
     howItWorks: `HomeSphere is a full-stack real estate platform. Here's how it works:
-
-        1. Browse Listings – Users can explore residential properties across Europe.
-        2. Filter & Search – Properties can be filtered by category and deal type.
-        3. Save Favorites – Users can save properties to their favorites list.
-        4. Contact Agents – Users can send inquiries via email through the contact form (powered by Resend).
-        5. Admin Dashboard – Administrators can manage the entire property catalog through a protected dashboard.`,
+        
+      1. Browse Listings – Explore residential properties across Europe.
+      2. AI Property Matching Agent – Describe what you're looking for in plain language (EN/DE) and get matching listings.
+      3. Filter & Search – Combined filtering by category, deal type, rooms, area, price, and energy class.
+      4. Save Favorites – Save properties to a personal favorites list.
+      5. Mortgage Calculator – Estimate monthly payments directly on property detail pages.
+      6. Interactive Map – View property locations on the detail page.
+      7. Contact Agents – Send inquiries via email through the contact form (powered by Resend).
+      8. Multilingual – Fully available in English and German.
+    9. Admin Dashboard – Manage the entire property catalog through a protected dashboard (try it via the read-only demo login – email: demo@homesphere.app, password: 123456).`,
 
     // In-depth case study: problem, challenges, solution & tech
     caseStudy: `Project Period

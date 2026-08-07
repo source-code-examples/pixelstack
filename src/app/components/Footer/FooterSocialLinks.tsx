@@ -23,7 +23,7 @@ const FooterSocialLinks = () => {
       </Link>
 
       <Link
-        href="https://www.instagram.com/frontend_trend/"
+        href="https://www.instagram.com/"
         target="_blank"
         className="text-2xl text-gray-600 opacity-70 transition duration-300 hover:opacity-100 dark:text-gray-300"
       >

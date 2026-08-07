@@ -12,7 +12,7 @@ export const portfolios: Portfolio[] = [
 
     // Short description of the project
     overview:
-      'A full-stack real estate platform featuring property browsing, filtering, favorites, email contact, admin dashboard, and multilingual support (EN/DE) – built with React, Node.js, Express, PostgreSQL, Supabase Auth and Resend.',
+      'A full-stack real estate platform featuring property browsing, advanced filtering, an AI-powered natural-language search agent, favorites, interactive maps, a mortgage calculator, email contact, an admin dashboard, and multilingual support (EN/DE).',
 
     // How the project works
     howItWorks: `HomeSphere is a full-stack real estate platform. Here's how it works:

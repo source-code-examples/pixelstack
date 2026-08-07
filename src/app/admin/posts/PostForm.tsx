@@ -58,7 +58,7 @@ const PostForm = ({ action, defaultValues }: PostFormProps) => {
 
       <div>
         <label className="mb-1 block text-sm font-medium">
-          Content — Markdown (GitHub-flavored). Raw HTML tags also allowed.
+          Content — HTML (rendered as-is on the public site)
         </label>
         <textarea
           name="content"

@@ -29,7 +29,7 @@ export const portfolios: Portfolio[] = [
 
     // In-depth case study: problem, challenges, solution & tech
     caseStudy: `Project Period
-        May – July 2026 (including planning phase in May; active development from June)
+        May – August 2026 (including planning phase in May; active development from June)
         Goal
         The goal was to develop a modern, scalable, and user-friendly real estate platform for both property seekers and administrators. The application provides intuitive property browsing with advanced filtering, detailed views, interactive maps, mortgage calculations, a conversational AI search agent, and a secure admin dashboard for complete property management.
         Technical Challenges
@@ -222,6 +222,31 @@ export const portfolios: Portfolio[] = [
       6. Newsletter – Subscribe to updates; admin receives notifications instantly
       7. Admin Area – Create, edit, publish, or delete posts through a protected dashboard
       8. Dark Mode – Switch themes with a persisteSnt preference`,
+    caseStudy: `Project Period
+        February – July 2026 (planning phase and project set up in May; active development from June) 
+        Goal
+        The goal was to build a full-stack developer portfolio that goes beyond a static showcase: a database-backed blog, real email delivery for contact and newsletter, portfolio/blog search, and an AI assistant that not only answers questions about the developer's background but actively helps visitors get in touch by detecting their intent and prefilling the contact form.
+        Technical Challenges
+        1. Migrating blog content management away from hand-edited HTML in a database cell to a proper, password-protected admin dashboard
+        2. Making the Prisma ORM work without its bundled Rust query engine (dropped in Prisma 7), requiring a driver adapter setup
+        3. Storing an admin credential safely in environment variables without it getting corrupted by shell/'.env' expansion
+        4. Enabling the AI assistant to reliably detect user intent and trigger the correct action (contact form prefill) rather than just answering questions
+        5. Protecting a public AI endpoint from abuse while keeping responses fast
+        6. Safely rendering blog post content (stored as HTML in the database) on the public site without introducing XSS risks or broken layout
+        Solution & Technologies Used
+        I built a full-stack architecture on top of Next.js:
+        - Frontend: Next.js 16 (App Router) + TypeScript 5 (strict mode), React 19, Tailwind CSS 4, Framer Motion
+        - Database: PostgreSQL hosted on Neon, accessed via Prisma 7 using the @prisma/adapter-pg driver adapter (required since Prisma 7 dropped the bundled Rust query engine)
+        - Admin & Auth: Auth.js v5 with a Credentials provider for a single admin account; the password hash is stored Base64-encoded in an environment variable to survive shell/.env expansion, then decoded at runtime before comparison
+        - Route protection: two independent layers — middleware.ts redirects unauthenticated requests before rendering, and every protected page/Server Action re-checks the session server-side via auth()
+        - AI: DeepSeek (OpenAI-compatible API) powering a floating chat widget with Tool Calling and intent detection, rate-limited to 1 request per 5 seconds per IP
+        - Content: authored in a plain textarea in the admin dashboard, stored as HTML in PostgreSQL and rendered on the public site via dangerouslySetInnerHTML
+        - Email: Resend for contact form delivery (with auto-reply) and newsletter admin notifications, both with server-side validation, XSS sanitization, and rate limiting
+        - Testing: Jest (unit + API tests) and Playwright (E2E), covering hook logic, route validation, and full browser flows
+
+        A key feature is the AI assistant's contact form prefill via Tool Calling: DeepSeek analyzes the user's message, decides whether to call a prefill_contact_form tool with a topic (job, project, collaboration, quote, feedback, other), and the chat widget then navigates to /connect?topic=[topic], where the contact form reads the URL parameter and pre-selects the matching option with a visual indicator — turning a conversational request into a ready-to-submit form without manual selection.
+        On the data side, blog posts moved from static seed files to a proper PostgreSQL table, with all reads centralized in a single access layer (src/lib/posts.ts) that only ever returns published posts, and pages fetching through it as Server Components.
+        Every admin create/update/delete action calls revalidatePath() for the affected routes, so changes made in the dashboard appear on the live site immediately without a redeploy.`,
     techStack: [
       'Next.js',
       'TypeScript',
@@ -250,13 +275,13 @@ export const portfolios: Portfolio[] = [
       'DeepSeek API (OpenAI-compatible)',
       'Tool Calling',
       'Intent Detection',
-      'react-markdown + remark-gfm + rehype-raw',
+      'react-markdown + remark-gfm (AI chat widget)',
       'Jest (unit & API tests)',
       'Playwright (E2E tests)',
       'Vercel (deployment)',
       'IONOS (custom domain)',
     ],
-    sourceUrl: 'https://github.com/wkleus',
+    sourceUrl: 'https://github.com/wkleus/pixelstack',
     preview: 'https://pixelstack-me.vercel.app/',
     imageSrc: '/portfolio-img/portfolio-fullstack.png',
     showFullTechStack: true,

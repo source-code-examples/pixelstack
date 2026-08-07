@@ -119,7 +119,7 @@ export const portfolios: Portfolio[] = [
     name: 'Linguify',
 
     overview:
-      'A web app for multilingual text processing, featuring live translation, synonym lookup, auto settings and AI Post-Editing. It consumes external language APIs and stores user preferences locally via localStorage and translation history in Supabase DB.',
+      'A full-stack web app for multilingual text work, featuring live translation, an interactive AI Studio for DeepSeek-powered post-editing, text-to-speech, synonym lookup, user accounts with a persisted translation history (Supabase), and a secure contact form.',
 
     howItWorks: `Linguify is a client-side web application for multilingual text processing. Here's how it works:
 

@@ -211,7 +211,7 @@ export const portfolios: Portfolio[] = [
   {
     name: 'PixelStack Portfolio',
     overview:
-      'An animated and responsive portfolio with Next.js, TypeScript, Tailwind CSS, Framer Motion, PostgreSQL, Resend, and DeepSeek AI – featuring a blog, contact form, newsletter, search, dark mode, and an AI assistant that prefills the contact form.',
+      'An animated, responsive portfolio featuring a database-backed blog, a contact form with real email delivery, newsletter subscriptions, portfolio and blog search, dark/light mode, and an AI assistant that answers questions and intelligently prefills the contact form based on user intent.',
     howItWorks: `PixelStack is a full‑stack portfolio platform with dynamic content, AI assistance, and real email delivery. Here’s how it works:
 
       1. Portfolio & Projects – Explore showcased apps with descriptions, tech stacks and live links
@@ -225,13 +225,13 @@ export const portfolios: Portfolio[] = [
     techStack: [
       'Next.js',
       'TypeScript',
+      'React',
       'TailwindCSS',
       'Prisma',
       'PostgreSQL',
       'Resend',
       'DeepSeek AI',
       'Framer Motion',
-      'Playwright',
       'Jest',
     ],
     fullTechStack: [
@@ -251,8 +251,8 @@ export const portfolios: Portfolio[] = [
       'Tool Calling',
       'Intent Detection',
       'react-markdown + remark-gfm + rehype-raw',
-      'Jest',
-      'Playwright',
+      'Jest (unit & API tests)',
+      'Playwright (E2E tests)',
       'Vercel (deployment)',
       'IONOS (custom domain)',
     ],

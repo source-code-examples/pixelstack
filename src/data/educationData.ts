@@ -22,6 +22,8 @@ export const education = [
     // Time period or completion year
     time: '2025 - Present',
 
+    inProgress: true,
+
     // Bullet points describing what was learned
     points: [
       'Developing and deploying AWS-based applications',

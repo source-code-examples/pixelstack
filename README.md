@@ -11,7 +11,7 @@
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 [![React Icons](https://img.shields.io/badge/React_Icons-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react-icons.github.io/react-icons/)
 [![DeepSeek](https://img.shields.io/badge/DeepSeek-4D6BFE?style=for-the-badge&logo=deepseek&logoColor=white)](https://deepseek.com/)
-[![Search](https://img.shields.io/badge/Search-Enabled-22c55e?style=for-the-badge&logo=search&logoColor=white)]()
+[![Search](https://img.shields.io/badge/Search-Enabled-22c55e?style=for-the-badge&logo=search&logoColor=white)](<>)
 [![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/)
 [![Playwright](https://img.shields.io/badge/Playwright-2EADEE?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Status: Deployed](https://img.shields.io/badge/Status-Deployed-22c55e?style=for-the-badge)](/)
@@ -138,22 +138,22 @@ The project is deployed on Vercel and IONOS.
 
 ### Tech Stack
 
-| Layer            | Technology                                       |
-| ---------------- | ------------------------------------------------ |
-| Framework        | Next.js 16 (App Router)                          |
-| Language         | TypeScript 5 (strict mode)                       |
-| UI               | React 19, Tailwind CSS 4, Framer Motion          |
-| Icons            | Heroicons, React Icons                           |
-| Database         | PostgreSQL (hosted on [Neon](https://neon.tech)) |
-| ORM              | Prisma 7 (driver adapter via `pg`)               |
-| Auth             | Auth.js v5 (Credentials, single admin account)   |
-| Password Hashing | bcryptjs                                         |
-| Email            | Resend SDK                                       |
-| AI Model         | DeepSeek API (OpenAI-compatible)                 |
-| AI Capabilities  | Tool Calling, Intent Detection                   |
-| Markdown         | react-markdown + remark-gfm + rehype-raw         |
-| Testing          | Jest, Playwright                                 |
-| Deployment       | Vercel + IONOS (custom domain)                   |
+| Layer            | Technology                                        |
+| ---------------- | ------------------------------------------------- |
+| Framework        | Next.js 16 (App Router)                           |
+| Language         | TypeScript 5 (strict mode)                        |
+| UI               | React 19, Tailwind CSS 4, Framer Motion           |
+| Icons            | Heroicons, React Icons                            |
+| Database         | PostgreSQL (hosted on [Neon](https://neon.tech))  |
+| ORM              | Prisma 7 (driver adapter via `pg`)                |
+| Auth             | Auth.js v5 (Credentials, single admin account)    |
+| Password Hashing | bcryptjs                                          |
+| Email            | Resend SDK                                        |
+| AI Model         | DeepSeek API (OpenAI-compatible)                  |
+| AI Capabilities  | Tool Calling, Intent Detection                    |
+| Markdown         | react-markdown + remark-gfm (AI chat widget only) |
+| Testing          | Jest, Playwright                                  |
+| Deployment       | Vercel + IONOS (custom domain)                    |
 
 ---
 
@@ -178,7 +178,7 @@ The project is deployed on Vercel and IONOS.
 │   │   │   ├── 📂 posts
 │   │   │   │   ├── 📂 new          # /admin/posts/new
 │   │   │   │   ├── 📂 [id]/edit    # /admin/posts/[id]/edit
-│   │   │   │   └── 📄 PostForm.tsx # Shared create/edit form (Markdown textarea)
+│   │   │   │   └── 📄 PostForm.tsx # Shared create/edit form (HTML textarea)
 │   │   │   └── 📄 actions.ts       # Server Actions: createPost, updatePost, deletePost
 │   │   ├── 📂 api
 │   │   │   ├── 📂 auth              # Auth.js route handler
@@ -194,8 +194,8 @@ The project is deployed on Vercel and IONOS.
 │   │   │   ├── 📂 MessageUI        # Error/success messages
 │   │   │   └── 📂 Profile          # About me components
 │   │   ├── 📂 portfolio            # Portfolio overview
-│   │   ├── 📂 posts                # Blog system — pages fetch from PostgreSQL, render Markdown
-│   │   ├── 📂 profile               # Profile page
+│   │   ├── 📂 posts                # Blog system — pages fetch from PostgreSQL, render stored HTML
+│   │   ├── 📂 profile              # Profile page
 │   │   ├── 📂 context              # ThemeContext provider
 │   │   ├── 📄 layout.tsx
 │   │   ├── 📄 globals.css
@@ -245,7 +245,7 @@ Blog posts are stored in a **PostgreSQL** database (`Post` table) - hosted on **
 
 ### Schema
 
-The `Post` model (`prisma/schema.prisma`) includes: `handle` (unique slug), `name`, `overview`, `content` (Markdown), `timeToRead`, `createdAt`, `updatedAt`, `published`, and `tags`.
+The `Post` model (`prisma/schema.prisma`) includes: `handle` (unique slug), `name`, `overview`, `content` (HTML), `timeToRead`, `createdAt`, `updatedAt`, `published`, and `tags`.
 
 ### How pages read the data
 
@@ -285,17 +285,14 @@ A password-protected area at `/admin/adminDashboard` for creating, editing, dele
 1. **`src/middleware.ts`** — redirects unauthenticated requests before the page even starts rendering, based on the `authorized` callback in `src/auth.config.ts`.
 2. **Every protected page itself** (`adminDashboard/page.tsx`, `posts/new/page.tsx`, `posts/[id]/edit/page.tsx`) re-checks the session server-side via `auth()`. Server Actions in `src/app/admin/actions.ts` do the same before touching the database.
 
-### Content format: Markdown
+### Content format: HTML
 
-Post `content` is authored as **Markdown** in a plain `<textarea>` — no rich-text editor needed. Rendering uses:
-
-- `react-markdown` + `remark-gfm` for the Markdown itself
-- `rehype-raw` so any raw HTML tags still pass through — this keeps the original posts (written in full HTML before the Markdown switch) rendering correctly without needing to be rewritten
+- Post `content` is authored directly as **HTML** in a plain `<textarea>` — no rich-text editor needed. It is stored as-is in PostgreSQL and rendered on the public site via `dangerouslySetInnerHTML`, with no Markdown-to-HTML conversion step.
 
 ### What the admin area can do
 
 - **`/admin/adminDashboard`** — list all posts (published **and** drafts) with status, handle and creation date, plus a sign-out button
-- **`/admin/posts/new`** — create a new post (title, handle/slug — auto-generated from the title if left blank —, overview, Markdown content, time-to-read, tags, published toggle)
+- **`/admin/posts/new`** — create a new post (title, handle/slug — auto-generated from the title if left blank —, overview, HTML content, time-to-read, tags, published toggle)
 - **`/admin/posts/[id]/edit`** — edit an existing post, pre-filled with its current values
 - **Delete** — with a browser confirmation prompt before submitting
 - **`published` toggle** — hide/show a post on the live site without deleting it

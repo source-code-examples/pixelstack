@@ -4,7 +4,16 @@
  * and an animation delay for the SkillBar component.
  */
 export const frontendSkills = [
-  { label: 'React.js • Redux Toolkit', level: 85, delay: 0.2 },
+  {
+    label: 'React.js • React Router • Redux / Redux Toolkit',
+    level: 85,
+    delay: 0.2,
+  },
+  {
+    label: 'Vue.js ',
+    level: 50,
+    delay: 0.8,
+  },
   { label: 'Next.js', level: 75, delay: 0.4 },
   { label: 'JavaScript', level: 85, delay: 0.6 },
   { label: 'TypeScript', level: 75, delay: 0.8 },
@@ -28,7 +37,8 @@ export const backendSkills = [
   },
   { label: 'Python • Flask • Django', level: 50, delay: 0.6 },
   {
-    label: 'Databases (MongoDB • PostgreSQL • MySQL • SQL/NoSQL)',
+    label:
+      'Databases (MongoDB • Prisma • Supabase • PostgreSQL • MySQL • SQL/NoSQL)',
     level: 70,
     delay: 0.8,
   },
@@ -37,7 +47,8 @@ export const backendSkills = [
   { label: 'Git • GitHub', level: 75, delay: 1.4 },
   { label: 'Cloud (AWS) • Docker • Microservices', level: 50, delay: 1.6 },
   {
-    label: 'AI Integration • LLM APIs • Tool Calling • Prompt Engineering',
+    label:
+      'AI Integration • LLM APIs • Tool Calling • Prompt Engineering • AI Agents',
     level: 65,
     delay: 1.8,
   },
@@ -68,6 +79,7 @@ export const fullSkillSet = [
       'Redux Toolkit',
       'React Router',
       'Next.js',
+      'vue.js',
       'Bootstrap',
       'Tailwind CSS',
       'Chakra UI',
@@ -96,13 +108,14 @@ export const fullSkillSet = [
       'Docker',
       'Serverless Computing',
       'Microservices Architecture',
-      'AWS Cloud (EC2, VPC, S3, RDS, IAM)',
+      'AWS Cloud Basics',
       'CI/CD Pipelines',
       'GitHub Actions',
       'Vercel',
       'Render',
       'Netlify',
-      'Dockerizing Spring Boot Apps',
+      'Cloudflare Pages',
+      'GitHub Pages',
     ],
   },
   {
@@ -110,7 +123,7 @@ export const fullSkillSet = [
     skills: [
       'Git',
       'GitHub',
-      'Command Line (CLI)',
+      'CLI',
       'VS Code',
       'IntelliJ IDEA',
       'Vite',
@@ -135,19 +148,27 @@ export const fullSkillSet = [
     category: 'AI & Intelligent Systems',
     skills: [
       'AI Agent Development',
-      'Tool Calling',
-      'Function Calling',
+      'Tool/Function Calling',
       'Prompt Engineering',
       'LLM Integration',
-      'DeepSeek API',
       'OpenAI-compatible APIs',
       'Multi-step Planning',
+      'Agentic Workflows',
+      'LangGraph Agents',
+      'LangChain Agentic Patterns',
+      'CrewAI / AutoGen / AG2 / BeeAI',
+      'Agentic RAG',
+      'Multi-agent Orchestration',
+      'Self-improving Agents',
+      'Reasoning Patterns',
     ],
   },
   {
     category: 'Databases & Data Management',
     skills: [
       'MongoDB (NoSQL)',
+      'Prisma ORM',
+      'Supabase',
       'PostgreSQL',
       'MySQL',
       'Spring Data JPA (ORM)',

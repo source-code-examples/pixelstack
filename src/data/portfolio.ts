@@ -25,28 +25,35 @@ export const portfolios: Portfolio[] = [
       6. Interactive Map – View property locations on the detail page.
       7. Contact Agents – Send inquiries via email through the contact form (powered by Resend).
       8. Multilingual – Fully available in English and German.
-    9. Admin Dashboard – Manage the entire property catalog through a protected dashboard (try it via the read-only demo login – email: demo@homesphere.app, password: 123456).`,
+    9. Admin Dashboard – Manage the entire property catalog through a protected dashboard (try it via the read-only demo logindocs: update HomeSphere info box with AI agent and missing Features – email: demo@homesphere.app, password: 123456).`,
 
     // In-depth case study: problem, challenges, solution & tech
     caseStudy: `Project Period
         May – July 2026 (including planning phase in May; active development from June)
         Goal
-        The goal was to develop a modern, scalable, and user-friendly real estate platform for both property seekers and administrators. The application provides intuitive property browsing with advanced filtering, detailed views, interactive maps, mortgage calculations, and a secure admin dashboard for complete property management.
+        The goal was to develop a modern, scalable, and user-friendly real estate platform for both property seekers and administrators. The application provides intuitive property browsing with advanced filtering, detailed views, interactive maps, mortgage calculations, a conversational AI search agent, and a secure admin dashboard for complete property management.
         Technical Challenges
         1. Implementing secure authentication and protected admin routes
         2. Building efficient category and deal-type filtering
         3. Integrating third-party services (maps, email delivery, financial calculator)
         4. Managing separate frontend and backend deployments (Vercel + Render)
         5. Ensuring secure server-side validation while using Supabase only for authentication
+        6. Integrating a conversational AI agent (DeepSeek + LangGraph) for natural-language property search, including multi-turn context merging and cost-optimized prompt caching
+        7. Ensuring reliable image handling: automatic resizing and WebP conversion on upload via Sharp
         Solution & Technologies Used
         I built a clean three-tier architecture:
         - Frontend: React 19 + Vite 8, React Router 7, Framer Motion, Leaflet, react-i18next (EN/DE), Yup for validation
         - Backend: Node.js / Express REST API with raw pg (node-postgres) driver for database queries
         - Database: PostgreSQL hosted on Supabase
         - Auth: Supabase Auth (JWT) + custom middleware using Supabase Admin Client for server-side token validation
-        - Additional Tools: Resend, express-rate-limit, he (XSS sanitization)
-        
+        - AI: DeepSeek (OpenAI-compatible API) orchestrated via LangGraph for a two-step parse-then-search pipeline
+        - Validation: Zod schemas on the backend for entries, contact form, and route params, returning field-level 400 errors
+        - Testing: Vitest + React Testing Library (frontend), Vitest + Supertest (backend), enforced via a GitHub Actions CI workflow on every push/PR
+        - Additional Tools: Resend, express-rate-limit, he (XSS sanitization), Sharp for image processing
+
         A notable technical aspect was the hybrid Supabase setup: Supabase is used exclusively for authentication and JWT issuance, while all CRUD operations are performed directly via the pg driver. This provided fine-grained control over database queries while maintaining secure token validation on the backend.
+        The AI Property Matching Agent lets users describe what they're looking for in plain language (EN/DE). A LangGraph pipeline extracts structured search criteria via DeepSeek, then runs a parameterized SQL query. To keep API costs predictable, the system prompt is kept byte-identical across requests to leverage DeepSeek's automatic prompt caching, and only the last 4 turns of chat history are sent.
+        Uploaded photos are automatically resized (max 1200px) and re-encoded as WebP (quality 80) via Sharp before being stored in Supabase Storage.
         The platform is fully responsive and includes robust data fetching with a custom useFetch hook and AbortController to prevent race conditions and memory leaks.`,
 
     // Technologies used in the project

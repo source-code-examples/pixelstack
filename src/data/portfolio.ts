@@ -298,7 +298,7 @@ export const portfolios: Portfolio[] = [
   {
     name: 'Houseplants Shop',
     overview:
-      'An online houseplants shop frontend that lets users browse plants, add them to a cart, adjust quantities, and view an order summary across multiple pages.',
+      'An online houseplants shop frontend that lets users browse plants, add them to a cart, adjust quantities, and view an order summary across multiple pages — built as part of the IBM Back-End Developer Capstone.',
     techStack: [
       'React',
       'Redux Toolkit',
@@ -328,37 +328,20 @@ export const portfolios: Portfolio[] = [
     imageSrc: '/portfolio-img/houseplants-shop.png',
     showFullTechStack: true,
   },
-
-  {
-    name: 'Portfolio Frontend',
-    overview:
-      'A responsive portfolio frontend built with React, featuring reusable UI components, form validation, and accessibility',
-    techStack: [
-      'React',
-      'JavaScript (ES6+)',
-      'Responsive Design',
-      'Form Validation',
-      'Accessibility (a11y)',
-      'Component-Based Architecture',
-      'Client-Side Routing',
-    ],
-    sourceUrl: 'https://github.com/wkleus/meta-advanced-react-portfolio',
-    imageSrc: '/portfolio-img/portfolio-frontend.png',
-    showFullTechStack: false,
-  },
   {
     name: 'Travel Recommender',
     overview:
-      'A client-side travel recommendation tool built with JavaScript, featuring dynamic search filtering, responsive design, and real-time result display using JSON data',
+      'A client-side travel recommendation tool that lets users search for destinations, temples, or beaches and displays matching results with images and descriptions in real time.',
     techStack: [
       'HTML5',
       'CSS3',
       'JavaScript (ES6+)',
-      'Responsive Design',
-      'JSON',
       'Fetch API',
+      'JSON',
       'Font Awesome',
+      'Responsive Design',
       'Client-Side Filtering',
+      'DOM Manipulation',
     ],
     sourceUrl: 'https://github.com/wkleus/travelRecommendation',
     imageSrc: '/portfolio-img/travel-recommender.png',
@@ -367,14 +350,18 @@ export const portfolios: Portfolio[] = [
   {
     name: 'Web Art Blog',
     overview:
-      'A responsive art blog frontend built with HTML5, CSS Grid/Flexbox, and  JavaScript – featuring client-side search, animated UI interactions, and a live clock widget',
+      'A responsive art blog featuring article search, interactive cards with hover effects, a sticky sidebar, and a live digital clock.',
     techStack: [
       'HTML5',
+      'CSS3',
       'JavaScript',
-      'Responsive Design',
       'CSS Grid & Flexbox',
       'CSS Animations',
       'Media Queries',
+      'Responsive Design',
+      'Client-Side Search',
+      'DOM Manipulation',
+      'Github Pages',
     ],
     sourceUrl: 'https://github.com/wkleus/art-blog',
     preview: 'https://wkleus.github.io/art-blog/',
@@ -382,6 +369,23 @@ export const portfolios: Portfolio[] = [
     showFullTechStack: false,
   },
 
+  // {
+  //   name: 'Portfolio Frontend',
+  //   overview:
+  //     'A responsive portfolio frontend built with React, featuring reusable UI components, form validation, and accessibility',
+  //   techStack: [
+  //     'React',
+  //     'JavaScript (ES6+)',
+  //     'Responsive Design',
+  //     'Form Validation',
+  //     'Accessibility (a11y)',
+  //     'Component-Based Architecture',
+  //     'Client-Side Routing',
+  //   ],
+  //   sourceUrl: 'https://github.com/wkleus/meta-advanced-react-portfolio',
+  //   imageSrc: '/portfolio-img/portfolio-frontend.png',
+  //   showFullTechStack: false,
+  // },
   // {
   //   name: 'Luxury Jewels Store',
   //   overview: 'A luxury jewelry store frontend with responsive design.',

@@ -75,14 +75,16 @@ const Portfolio = () => {
 
                 {/* Links: preview + source code */}
                 <div className="mt-2 flex gap-8">
-                  <Link
-                    href={portfolio.preview}
-                    target="_blank"
-                    className="flex items-center gap-2 font-semibold text-cyan-600 transition-colors hover:underline dark:text-cyan-400/80 dark:hover:text-cyan-400"
-                  >
-                    <HiOutlineGlobeAlt className="h-5 w-5" />
-                    <span>Preview</span>
-                  </Link>
+                  {portfolio.preview && (
+                    <Link
+                      href={portfolio.preview}
+                      target="_blank"
+                      className="flex items-center gap-2 font-semibold text-cyan-600 transition-colors hover:underline dark:text-cyan-400/80 dark:hover:text-cyan-400"
+                    >
+                      <HiOutlineGlobeAlt className="h-5 w-5" />
+                      <span>Preview</span>
+                    </Link>
+                  )}
 
                   <Link
                     href={portfolio.sourceUrl}

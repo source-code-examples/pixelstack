@@ -25,4 +25,5 @@ export interface Portfolio {
   showFullTechStack?: boolean
   howItWorks?: string
   caseStudy?: string
+  featured?: boolean
 }

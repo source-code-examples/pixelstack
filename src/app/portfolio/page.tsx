@@ -180,6 +180,15 @@ const Portfolio = () => {
                   </span>
                 </button>
               )}
+
+              {/* "Featured" badge */}
+              {portfolio.featured && (
+                <div className="ml-auto flex items-center">
+                  <span className="-mt-5 rounded-lg border border-amber-600 px-2 py-1 text-[8px] font-bold tracking-wide text-amber-600 uppercase shadow-sm dark:border-amber-400 dark:text-amber-400">
+                    Featured
+                  </span>
+                </div>
+              )}
             </div>
             <p className="mb-5 text-gray-600 dark:text-gray-300">
               {portfolio.overview}

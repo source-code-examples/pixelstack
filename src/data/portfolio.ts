@@ -10,6 +10,9 @@ export const portfolios: Portfolio[] = [
     // Project name
     name: 'HomeSphere',
 
+    // Recommended project
+    featured: true,
+
     // Short description of the project
     overview:
       'A full-stack real estate platform featuring property browsing, advanced filtering, an AI-powered natural-language search agent, favorites, interactive maps, a mortgage calculator, email contact, an admin dashboard, and multilingual support (EN/DE).',
@@ -121,6 +124,8 @@ export const portfolios: Portfolio[] = [
   {
     name: 'Linguify',
 
+    featured: true,
+
     overview:
       'A full-stack web app for multilingual text work, featuring live translation, an interactive AI Studio for DeepSeek-powered post-editing, text-to-speech, synonym lookup, user accounts with a persisted translation history (Supabase), and a secure contact form.',
 
@@ -210,8 +215,12 @@ export const portfolios: Portfolio[] = [
   },
   {
     name: 'PixelStack Portfolio',
+
+    featured: true,
+
     overview:
       'An animated, responsive portfolio featuring a database-backed blog, a contact form with real email delivery, newsletter subscriptions, portfolio and blog search, dark/light mode, and an AI assistant that answers questions and intelligently prefills the contact form based on user intent.',
+
     howItWorks: `PixelStack is a full‑stack portfolio platform with dynamic content, AI assistance, and real email delivery. Here’s how it works:
 
       1. Portfolio & Projects – Explore showcased apps with descriptions, tech stacks and live links
@@ -222,6 +231,7 @@ export const portfolios: Portfolio[] = [
       6. Newsletter – Subscribe to updates; admin receives notifications instantly
       7. Admin Area – Create, edit, publish, or delete posts through a protected dashboard
       8. Dark Mode – Switch themes with a persisteSnt preference`,
+
     caseStudy: `Project Period
         February – July 2026 (planning phase and project set up in May; active development from June) 
         Goal
@@ -247,6 +257,7 @@ export const portfolios: Portfolio[] = [
         A key feature is the AI assistant's contact form prefill via Tool Calling: DeepSeek analyzes the user's message, decides whether to call a prefill_contact_form tool with a topic (job, project, collaboration, quote, feedback, other), and the chat widget then navigates to /connect?topic=[topic], where the contact form reads the URL parameter and pre-selects the matching option with a visual indicator — turning a conversational request into a ready-to-submit form without manual selection.
         On the data side, blog posts moved from static seed files to a proper PostgreSQL table, with all reads centralized in a single access layer (src/lib/posts.ts) that only ever returns published posts, and pages fetching through it as Server Components.
         Every admin create/update/delete action calls revalidatePath() for the affected routes, so changes made in the dashboard appear on the live site immediately without a redeploy.`,
+
     techStack: [
       'Next.js',
       'TypeScript',
@@ -259,6 +270,7 @@ export const portfolios: Portfolio[] = [
       'Framer Motion',
       'Jest',
     ],
+
     fullTechStack: [
       'Next.js',
       'TypeScript',
@@ -281,11 +293,16 @@ export const portfolios: Portfolio[] = [
       'Vercel (deployment)',
       'IONOS (custom domain)',
     ],
+
     sourceUrl: 'https://github.com/wkleus/pixelstack',
+
     preview: 'https://pixelstack-me.vercel.app/',
+
     imageSrc: '/portfolio-img/portfolio-fullstack.png',
+
     showFullTechStack: true,
   },
+
   {
     name: 'Little Lemon Restaurant',
     overview:

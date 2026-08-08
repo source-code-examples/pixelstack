@@ -172,8 +172,8 @@ export const portfolios: Portfolio[] = [
       'Supabase',
       'DeepSeek AI',
       'Express',
-      'GitHub Actions (CI/CD)',
       'Jest',
+      'GitHub Actions (CI/CD)',
       'React Testing Library',
     ],
 
@@ -312,10 +312,9 @@ export const portfolios: Portfolio[] = [
       'React Router',
       'JavaScript (ES6+)',
       'Responsive Design',
+      'Accessibility (ARIA)',
       'Form Validation',
       'Component-Based Architecture',
-      'CSS',
-      'Accessibility (ARIA)',
     ],
     fullTechStack: [
       'React',
@@ -396,8 +395,9 @@ export const portfolios: Portfolio[] = [
     techStack: [
       'HTML5',
       'CSS3',
-      'JavaScript',
       'CSS Grid & Flexbox',
+      'JavaScript',
+
       'CSS Animations',
       'Media Queries',
       'Responsive Design',

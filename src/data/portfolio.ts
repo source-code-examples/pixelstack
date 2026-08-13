@@ -32,7 +32,7 @@ export const portfolios: Portfolio[] = [
 
     // In-depth case study: problem, challenges, solution & tech
     caseStudy: `Project Period
-        May – August 2026 (including planning phase in May; active development from June)
+        May – August 2026.
         Goal
         The goal was to develop a modern, scalable, and user-friendly real estate platform for both property seekers and administrators. The application provides intuitive property browsing with advanced filtering, detailed views, interactive maps, mortgage calculations, a conversational AI search agent, and a secure admin dashboard for complete property management.
         Technical Challenges
@@ -141,7 +141,7 @@ export const portfolios: Portfolio[] = [
       8. Contact – Reach out via a secure contact form.`,
 
     caseStudy: `Project Period
-        February (planning phase and project set up), June - July 2026 (active development)
+        February - July 2026.
         Goal
         The goal was to build a full-stack multilingual text-processing app that goes beyond a simple translator: fast, free translation for everyday use, combined with an optional AI layer for higher-quality, context-aware refinement, plus supporting tools like text-to-speech, synonym lookup, and a personal translation history for registered users.
         Technical Challenges
@@ -233,7 +233,8 @@ export const portfolios: Portfolio[] = [
       8. Dark Mode – Switch themes with a persisteSnt preference`,
 
     caseStudy: `Project Period
-        February – July 2026 (planning phase and project set up in May; active development from June) 
+
+        February – July 2026.
         Goal
         The goal was to build a full-stack developer portfolio that goes beyond a static showcase: a database-backed blog, real email delivery for contact and newsletter, portfolio/blog search, and an AI assistant that not only answers questions about the developer's background but actively helps visitors get in touch by detecting their intent and prefilling the contact form.
         Technical Challenges
@@ -307,6 +308,10 @@ export const portfolios: Portfolio[] = [
     featured: true,
     overview:
       'A lightweight full‑stack reservation demo built to demonstrate MongoDB integration, Docker containerization, and a clean Express and React (TypeScript) setup.',
+    caseStudy: `Project Period
+    August 2026.
+    Goal
+     The goal here was to create a focused, clean showcase of two specific skills: Docker containerization and MongoDB integration. The result is a small full-stack reservation app with a clean Express + React (TypeScript) setup.`,
     techStack: [
       'React',
       'TypeScript',

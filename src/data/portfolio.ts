@@ -311,7 +311,22 @@ export const portfolios: Portfolio[] = [
     caseStudy: `Project Period
     August 2026.
     Goal
-     The goal here was to create a focused, clean showcase of two specific skills: Docker containerization and MongoDB integration. The result is a small full-stack reservation app with a clean Express + React (TypeScript) setup.`,
+     The goal here was to create a focused, clean showcase of two specific skills: Docker containerization and MongoDB integration. The result is a small full-stack reservation app with a clean Express + React (TypeScript) setup.
+     Technical Challenges
+    1. Structuring a multi-container setup (frontend, API, database) that starts reliably with a single command
+    2. Avoiding a bloated, insecure production image by keeping build tooling out of the final container
+    3. Making the API wait for MongoDB to be ready instead of crashing on startup
+    4. Serving a Vite-built React app in production without a Node runtime
+    5. Keeping the frontend's API calls environment-agnostic across local dev and containerized runs
+    Solution & Technologies Used
+    I built a three-service architecture orchestrated entirely through Docker Compose:
+    - Frontend: React 19 + Vite, TypeScript, calling a REST API through a small typed fetch layer
+    - Backend: Node.js / Express 5 + TypeScript, with Mongoose for schema validation and data access
+    - Database: MongoDB running in its own container, with a named volume so data survives container restarts
+    - Containerization: multi-stage Dockerfiles for both frontend and backend — a build stage compiles TypeScript (backend) or runs the Vite production build (frontend), while a separate, minimal runtime stage ships only the compiled output. The backend runtime installs production dependencies only (npm ci --omit=dev) and runs as a non-root user; the frontend runtime is a lightweight nginx:alpine image that serves the static build and reverse-proxies /api/* to the backend container
+    - Orchestration: a single docker-compose.yml wires up all three services on an internal network, with a MongoDB healthcheck gating API startup so the API only comes up once the database is actually ready to accept connections
+
+    The whole stack — frontend, API, and database — starts with one command: docker compose up --build. No local Node installation, no separate npm run dev step, and no manual database setup required, making the project easy to run and inspect end to end.`,
     techStack: [
       'React',
       'TypeScript',
@@ -326,7 +341,8 @@ export const portfolios: Portfolio[] = [
       'React',
       'TypeScript',
       'MongoDB',
-      'Docker, Node.js',
+      'Docker',
+      'Node.js',
       'Express.js',
       'tsx',
       'Mongoose',

@@ -44,7 +44,6 @@ export const backendSkills = [
   },
   { label: 'JSON • HTTP • REST APIs', level: 75, delay: 1.0 },
   { label: 'Testing • Debugging', level: 65, delay: 1.2 },
-  { label: 'Git • GitHub', level: 75, delay: 1.4 },
   { label: 'Cloud (AWS) • Docker • Microservices', level: 50, delay: 1.6 },
   {
     label:

@@ -4,6 +4,7 @@ import HeaderNav from './components/Header/HeaderNav'
 import { ThemeProvider } from './context/ThemeContext'
 import Footer from './components/Footer/Footer'
 import AgentWidget from './components/Agent/AgentWidget'
+import Script from 'next/script'
 
 const ionosWebsite = process.env.NEXT_PUBLIC_IONOS_WEBSITE
 
@@ -50,6 +51,14 @@ export default function RootLayout({
           {/* AI-powered agent — floating widget visible on all pages */}
           <AgentWidget />
         </ThemeProvider>
+
+        {/* Self-hosted Umami analytics — tracks visits across both the
+            IONOS and Vercel deployments under a single website ID */}
+        <Script
+          src="https://umami-eta-tan.vercel.app/script.js"
+          data-website-id="fd1d0790-db23-47be-ae23-8db9823fc5c8"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

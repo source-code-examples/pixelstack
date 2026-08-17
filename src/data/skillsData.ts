@@ -120,8 +120,7 @@ export const fullSkillSet = [
   {
     category: 'Build Tools, Editors & Development',
     skills: [
-      'Git',
-      'GitHub',
+      'Git & GitHub',
       'CLI',
       'VS Code',
       'IntelliJ IDEA',

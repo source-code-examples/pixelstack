@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { BsGlobe2 } from 'react-icons/bs'
 import { FaGithub, FaGithubSquare, FaInstagram } from 'react-icons/fa'
 
 const FooterSocialLinks = () => {
@@ -31,13 +30,55 @@ const FooterSocialLinks = () => {
       </Link>
 
       <Link
-        href="https://pixelstack-me.vercel.app/"
+        href="https://homesphere-web.vercel.app"
         target="_blank"
-        className="group relative text-2xl text-gray-600 opacity-70 transition duration-300 hover:opacity-100 dark:text-gray-300"
+        className="group bg-gray relative text-gray-600 transition duration-300 dark:text-gray-300"
       >
-        <BsGlobe2 size={25} />
+        <Image
+          src="/icons/hs.svg"
+          alt="HomeSphere Website"
+          width={26}
+          height={26}
+          className="relative rounded-t-full border border-gray-600 opacity-70 transition hover:opacity-100 dark:border-gray-300"
+        />
         <span className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-lg bg-gray-900 px-2 py-1 text-[11px] font-medium whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-yellow-100 dark:text-black">
-          Demo Vercel Website
+          HomeSphere
+          <span className="absolute top-full left-1/2 -translate-x-1/2 border-7 border-transparent border-t-gray-900 dark:border-t-yellow-100"></span>
+        </span>
+      </Link>
+
+      <Link
+        href="https://linguify-web.vercel.app"
+        target="_blank"
+        className="group bg-gray relative text-gray-600 transition duration-300 dark:text-gray-300"
+      >
+        <Image
+          src="/icons/l.svg"
+          alt="Linguify Website"
+          width={23}
+          height={23}
+          className="relative -top-1 rounded-tl-full rounded-br-full border border-gray-600 py-1 opacity-70 transition hover:opacity-100 dark:border-gray-300"
+        />
+        <span className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-lg bg-gray-900 px-2 py-1 text-[11px] font-medium whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-yellow-100 dark:text-black">
+          Linguify
+          <span className="absolute top-full left-1/2 -translate-x-1/2 border-7 border-transparent border-t-gray-900 dark:border-t-yellow-100"></span>
+        </span>
+      </Link>
+
+      <Link
+        href="https://pixelstack-me.vercel.app"
+        target="_blank"
+        className="group bg-gray relative text-gray-600 transition duration-300 dark:text-gray-300"
+      >
+        <Image
+          src="/icons/ps.svg"
+          alt="PixelStack Vercel Demo Website"
+          width={26}
+          height={26}
+          className="relative rounded-md border border-gray-600 opacity-70 transition hover:opacity-100 dark:border-gray-300"
+        />
+        <span className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-lg bg-gray-900 px-2 py-1 text-[11px] font-medium whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-yellow-100 dark:text-black">
+          PixelStack Vercel Demo
           <span className="absolute top-full left-1/2 -translate-x-1/2 border-7 border-transparent border-t-gray-900 dark:border-t-yellow-100"></span>
         </span>
       </Link>

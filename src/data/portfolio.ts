@@ -305,7 +305,7 @@ export const portfolios: Portfolio[] = [
   },
   {
     name: 'Booking App',
-    featured: true,
+    featured: false,
     overview:
       'A lightweight full‑stack reservation demo built to demonstrate MongoDB integration, Docker containerization, and a clean Express and React (TypeScript) setup.',
     caseStudy: `Project Period

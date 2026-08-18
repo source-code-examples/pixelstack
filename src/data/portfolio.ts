@@ -229,7 +229,7 @@ export const portfolios: Portfolio[] = [
       4. AI Assistant – Ask questions about skills, projects, or tech stack; the AI can also prefill the contact form based on your intent
       5. Contact Form – Send real messages with validation, sanitization and automatic reply
       6. Newsletter – Subscribe to updates; admin receives notifications instantly
-      7. Admin Area – Create, edit, publish, or delete posts through a protected dashboard
+      7. Admin Area – Create, edit, publish, or delete posts through a protected dashboard, which also shows live all-time visitor stats pulled from the self-hosted Umami analytics instance
       8. Dark Mode – Switch themes with a persisteSnt preference`,
 
     caseStudy: `Project Period
@@ -254,7 +254,7 @@ export const portfolios: Portfolio[] = [
         - Content: authored in a plain textarea in the admin dashboard, stored as HTML in PostgreSQL and rendered on the public site via dangerouslySetInnerHTML
         - Email: Resend for contact form delivery (with auto-reply) and newsletter admin notifications, both with server-side validation, XSS sanitization, and rate limiting
         - Testing: Jest (unit + API tests) and Playwright (E2E), covering hook logic, route validation, and full browser flows
-        - Analytics: self-hosted Umami (separate Vercel deployment + Neon Postgres), tracking visits across the custom domain and the Vercel URL under one unified dashboard
+        - Analytics: self-hosted Umami (separate Vercel deployment + Neon Postgres), tracking visits across the custom domain and the Vercel URL under one unified dashboard; all-time stats are also surfaced directly in the admin dashboard via a server-side fetch authenticated against Umami's login endpoint
 
         A key feature is the AI assistant's contact form prefill via Tool Calling: DeepSeek analyzes the user's message, decides whether to call a prefill_contact_form tool with a topic (job, project, collaboration, quote, feedback, other), and the chat widget then navigates to /connect?topic=[topic], where the contact form reads the URL parameter and pre-selects the matching option with a visual indicator — turning a conversational request into a ready-to-submit form without manual selection.
         On the data side, blog posts moved from static seed files to a proper PostgreSQL table, with all reads centralized in a single access layer (src/lib/posts.ts) that only ever returns published posts, and pages fetching through it as Server Components.

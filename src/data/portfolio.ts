@@ -254,10 +254,12 @@ export const portfolios: Portfolio[] = [
         - Content: authored in a plain textarea in the admin dashboard, stored as HTML in PostgreSQL and rendered on the public site via dangerouslySetInnerHTML
         - Email: Resend for contact form delivery (with auto-reply) and newsletter admin notifications, both with server-side validation, XSS sanitization, and rate limiting
         - Testing: Jest (unit + API tests) and Playwright (E2E), covering hook logic, route validation, and full browser flows
+        - Analytics: self-hosted Umami (separate Vercel deployment + Neon Postgres), tracking visits across the custom domain and the Vercel URL under one unified dashboard
 
         A key feature is the AI assistant's contact form prefill via Tool Calling: DeepSeek analyzes the user's message, decides whether to call a prefill_contact_form tool with a topic (job, project, collaboration, quote, feedback, other), and the chat widget then navigates to /connect?topic=[topic], where the contact form reads the URL parameter and pre-selects the matching option with a visual indicator — turning a conversational request into a ready-to-submit form without manual selection.
         On the data side, blog posts moved from static seed files to a proper PostgreSQL table, with all reads centralized in a single access layer (src/lib/posts.ts) that only ever returns published posts, and pages fetching through it as Server Components.
-        Every admin create/update/delete action calls revalidatePath() for the affected routes, so changes made in the dashboard appear on the live site immediately without a redeploy.`,
+        Every admin create/update/delete action calls revalidatePath() for the affected routes, so changes made in the dashboard appear on the live site immediately without a redeploy.
+        Site analytics run through a self-hosted Umami instance with its own Neon-backed database. Since the custom domain is DNS-routed to the same Vercel deployment rather than being separately hosted, a single tracking script captures visits across both the custom domain and the Vercel URL in one unified dashboard.`,
 
     techStack: [
       'Next.js',

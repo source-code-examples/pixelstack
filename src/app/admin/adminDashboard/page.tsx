@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { auth, signOut } from '@/auth'
 import DeletePostButton from './DeletePostButton'
 import Link from 'next/link'
+import AnalyticsWidget from './AnalyticsWidget'
 
 const AdminDashboard = async () => {
   // real access check: no valid session -> straight back to login page
@@ -39,6 +40,9 @@ const AdminDashboard = async () => {
           </form>
         </div>
       </div>
+
+      {/* Live visitor stats pulled from the self-hosted Umami instance */}
+      <AnalyticsWidget />
 
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">

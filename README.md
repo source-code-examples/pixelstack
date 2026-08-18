@@ -153,7 +153,8 @@ The project is deployed on Vercel and IONOS.
 | AI Capabilities  | Tool Calling, Intent Detection                    |
 | Markdown         | react-markdown + remark-gfm (AI chat widget only) |
 | Testing          | Jest, Playwright                                  |
-| Deployment       | Vercel + IONOS (custom domain)                    |
+| Analytics        | Self-hosted Umami (Vercel + Neon Postgres)        |
+| Deployment       | Vercel (custom domain via IONOS DNS)              |
 
 ---
 
@@ -484,6 +485,18 @@ npm run test:e2e    # Playwright E2E tests
 | API (backend validation) | 5      | ✅ passing         |
 | E2E (browser flow)       | 3      | ✅ passing         |
 | **Total**                | **12** | **✅ all passing** |
+
+---
+
+## Analytics
+
+Visitor analytics are tracked via a **self-hosted [Umami](https://umami.is)** instance, deployed separately on Vercel with its own PostgreSQL database (hosted on Neon).
+
+Since `pixelstack.me` (IONOS) is a custom domain pointing to the same Vercel deployment — not a separate hosting environment — a single tracking script in `layout.tsx` captures visits across both the custom domain and the `.vercel.app` URL under one unified dashboard.
+
+- Privacy-focused, cookie-free tracking (no cookie consent banner required)
+- Self-hosted, so visitor data stays fully under my own control
+- Tracks visitors, page views, sessions, and referrers in real time
 
 ---
 

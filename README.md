@@ -297,6 +297,7 @@ A password-protected area at `/admin/adminDashboard` for creating, editing, dele
 - **`/admin/posts/[id]/edit`** — edit an existing post, pre-filled with its current values
 - **Delete** — with a browser confirmation prompt before submitting
 - **`published` toggle** — hide/show a post on the live site without deleting it
+- **Live analytics widget** — all-time visitor stats (visitors, visits, views) pulled from the self-hosted Umami instance, shown directly on `/admin/adminDashboard`
 
 Every create/update/delete Server Action calls `revalidatePath()` for the affected routes (`/admin/adminDashboard`, `/posts`, `/`, `/posts/[handle]`).
 
@@ -497,6 +498,7 @@ Since `pixelstack.me` (IONOS) is a custom domain pointing to the same Vercel dep
 - Privacy-focused, cookie-free tracking (no cookie consent banner required)
 - Self-hosted, so visitor data stays fully under my own control
 - Tracks visitors, page views, sessions, and referrers in real time
+- All-time visitor stats are also surfaced directly in the admin dashboard via a server-side widget that authenticates against Umami's login endpoint (self-hosted Umami has no persistent API keys)
 
 ---
 

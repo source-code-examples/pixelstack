@@ -78,7 +78,7 @@ The project is deployed on Vercel and IONOS.
 <p align="center">
 <img src="public/preview/admin-dashboard-page.png" width="700" alt="Admin Dashboard page preview" />
 <br />
-<em>Admin Dashboard page with buttons for create, edit, delete posts</em>
+<em>Admin Dashboard with post management and live Umami visitor stats</em>
 </p>
 
 <p align="center">

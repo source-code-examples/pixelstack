@@ -55,9 +55,9 @@ const FooterSocialLinks = () => {
         <Image
           src="/icons/l.svg"
           alt="Linguify Website"
-          width={23}
-          height={23}
-          className="relative -top-1 rounded-tl-full rounded-br-full border border-gray-600 py-1 opacity-70 transition hover:opacity-100 dark:border-gray-300"
+          width={26}
+          height={26}
+          className="relative rounded-tl-2xl rounded-br-2xl border border-gray-600 opacity-70 transition hover:opacity-100 dark:border-gray-300"
         />
         <span className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-lg bg-gray-900 px-2 py-1 text-[11px] font-medium whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-yellow-100 dark:text-black">
           Linguify

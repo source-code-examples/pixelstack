@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
-  <rect width="100%" height="100%" fill="#1a1a1a" />
+  <rect width="100%" height="100%" fill="#bbb" />
   <text x="50%" y="50%" font-size="32" font-family="Arial, sans-serif"
-        font-style="italic"
-        fill="white" text-anchor="middle" dominant-baseline="middle">
+        font-style="italic" opacity="0.7"
+        fill="black" font-weight="bold" text-anchor="middle" dominant-baseline="middle">
     PS
   </text>
 </svg>

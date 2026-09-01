@@ -359,6 +359,37 @@ export const portfolios: Portfolio[] = [
     showFullTechStack: true,
   },
   {
+    name: 'VIPE Media',
+    overview:
+      'An editorial news feed for art and culture. Users can browse articles by category, search live, bookmark stories and read them in detail — complete with smooth loading states and a refined dark mode.',
+    techStack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'App Router',
+      'Dark Mode',
+      'Infinite Scroll',
+    ],
+    fullTechStack: [
+      'Next.js 16 (App Router, Turbopack)',
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS v4',
+      'lucide-react',
+      'next-themes',
+      'Prisma',
+      '@upstash/redis',
+      'clsx / tailwind-merge',
+      'IntersectionObserver',
+      'localStorage',
+    ],
+    sourceUrl: 'https://github.com/wkleus/vipe-media/',
+    preview: 'https://vipe-media.vercel.app/',
+    imageSrc: '/portfolio-img/vipe-media.png', // anpassen falls nötig
+    showFullTechStack: true,
+  },
+  {
     name: 'Little Lemon Restaurant',
     overview:
       'A responsive and accessible single-page restaurant website featuring client-side routing, a table booking form with validation, and a modular, component-based architecture — built as part of the Meta Front-End Developer Capstone.',
@@ -492,65 +523,4 @@ export const portfolios: Portfolio[] = [
     imageSrc: '/portfolio-img/widget-websites-starter-2.png',
     showFullTechStack: false,
   },
-
-  // {
-  //   name: 'Portfolio Frontend',
-  //   overview:
-  //     'A responsive portfolio frontend built with React, featuring reusable UI components, form validation, and accessibility',
-  //   techStack: [
-  //     'React',
-  //     'JavaScript (ES6+)',
-  //     'Responsive Design',
-  //     'Form Validation',
-  //     'Accessibility (a11y)',
-  //     'Component-Based Architecture',
-  //     'Client-Side Routing',
-  //   ],
-  //   sourceUrl: 'https://github.com/wkleus/meta-advanced-react-portfolio',
-  //   imageSrc: '/portfolio-img/portfolio-frontend.png',
-  //   showFullTechStack: false,
-  // },
-  // {
-  //   name: 'Luxury Jewels Store',
-  //   overview: 'A luxury jewelry store frontend with responsive design.',
-  //   techStack: ['HTML', 'CSS', 'JavaScript', 'Responsive Design'],
-  //   sourceUrl: 'https://github.com/wkleus/meta-mangata-gallo-frontend',
-  //   imageSrc: '/portfolio-img/mangata-gallo.png',
-  //  showFullTechStack: false,
-  // },
-
-  // {
-  //   name: 'Household Exchange Backend',
-  //   overview:
-  //     'Back-end web application, that links people giving away unwanted household items with those seeking free, recycled items.',
-  //   techStack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js'],
-  //   sourceUrl: 'https://github.com/wkleus/backend-nodejs-capstone',
-  //   imageSrc: '/portfolio-img/household-items-exchange.png',
-  //  showFullTechStack: false,
-  // },
-
-  // {
-  //   name: 'Desktop Widget',
-  //   overview:
-  //     'A collection of desktop widgets written in Java, using JavaFX and CSS.',
-  //   techStack: ['Java', 'JavaFX', 'CSS'],
-  //   sourceUrl:
-  //     'https://github.com/wkleus/GUI-code-samples/tree/main/WidgetsCollection/src',
-  //   preview:
-  //     'https://github.com/wkleus/GUI-code-samples/tree/main/WidgetsCollection/src',
-  //   imageSrc: '/portfolio-img/desktop-widget.jpg',
-  //  showFullTechStack: false,
-  // },
-
-  // {
-  //   name: 'IP Address Finder',
-  //   overview: 'A IP address finder written in Java, using JavaFX and CSS.',
-  //   techStack: ['Java', 'JavaFX', 'FXML', 'CSS'],
-  //   sourceUrl:
-  //     'https://github.com/wkleus/GUI-code-samples/tree/main/IpAddressFinderFXGui/src',
-  //   preview:
-  //     'https://github.com/wkleus/GUI-code-samples/tree/main/IpAddressFinderFXGui/src',
-  //   imageSrc: '/portfolio-img/ip-address-finder.jpg',
-  // },
-  //  showFullTechStack: false,
 ]

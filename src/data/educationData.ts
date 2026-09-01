@@ -94,7 +94,7 @@ export const education = [
     title: 'Certified Computer Scientist',
     icon: BsDatabaseGear,
     org: 'SGD',
-    time: '2021 - 2023',
+    time: '2023',
     points: [
       'Computer Science fundamentals',
       'Python development',

@@ -2,13 +2,114 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Sparkle, Star, Zap } from 'lucide-react'
-import { useState } from 'react'
+import { motion, useAnimationFrame } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { SiReact, SiGit, SiNextdotjs } from 'react-icons/si'
+
+// Tech Orbit Component: Displays tech icons orbiting around a central point
+const TechOrbit = () => {
+  // Web Framework & Tech Tool Icons
+  const techSymbols = [
+    { icon: SiReact, label: 'React' },
+    { icon: SiGit, label: 'Git' },
+    { icon: SiNextdotjs, label: 'Next.js' },
+  ]
+
+  // Same radii for SVG and icons
+  const orbitRadiusX = 650
+  const orbitRadiusY = 350
+
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useAnimationFrame((t) => {
+    const time = t / 1000 // Seconds instead of ms
+
+    techSymbols.forEach((_, index) => {
+      const baseAngle = (index / techSymbols.length) * Math.PI * 2
+      const currentAngle = baseAngle + time * 0.2
+      const x = Math.cos(currentAngle) * orbitRadiusX
+      const y = Math.sin(currentAngle) * orbitRadiusY
+
+      const el = iconRefs.current[index]
+      if (el) {
+        el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`
+      }
+    })
+  })
+
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      aria-hidden="true"
+    >
+      {/* Orbit Container with SVG */}
+      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="relative -rotate-10">
+          <svg
+            className="absolute top-1/2 left-1/2 h-200 w-350 -translate-x-1/2 -translate-y-1/2 opacity-70"
+            viewBox="-700 -400 1400 800"
+          >
+            <ellipse
+              cx="0"
+              cy="0"
+              rx={orbitRadiusX}
+              ry={orbitRadiusY}
+              fill="none"
+              stroke="rgba(6, 182, 212, 0.15)"
+              strokeWidth="1.5"
+              strokeDasharray="10 3"
+            />
+          </svg>
+
+          {/* Icons follow the orbit line exactly */}
+          {techSymbols.map((symbol, index) => {
+            const IconComponent = symbol.icon
+
+            return (
+              <div
+                key={symbol.label}
+                ref={(el) => {
+                  iconRefs.current[index] = el
+                }}
+                className="absolute top-1/2 left-1/2 will-change-transform"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/5 ring-1 ring-cyan-500/30 backdrop-blur-sm transition-all hover:scale-110">
+                  <IconComponent size={32} className="text-cyan-500/30" />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const Intro = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
+
+  const [isDark, setIsDark] = useState(false)
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
+
+  useEffect(() => {
+    const root = document.documentElement
+    const checkDark = () => setIsDark(root.classList.contains('dark'))
+    checkDark()
+
+    const observer = new MutationObserver(checkDark)
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] })
+
+    const mq = window.matchMedia('(min-width: 1600px)')
+    const checkSize = () => setIsLargeScreen(mq.matches)
+    checkSize()
+    mq.addEventListener('change', checkSize)
+
+    return () => {
+      observer.disconnect()
+      mq.removeEventListener('change', checkSize)
+    }
+  }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -20,14 +121,32 @@ const Intro = () => {
 
   return (
     <section
-      className="relative min-h-screen overflow-hidden py-35"
+      className="relative min-h-screen overflow-hidden py-10"
+      style={{
+        paddingTop: 'clamp(2.5rem, 5vw, 8rem)',
+        paddingBottom: 'clamp(2.5rem, 5vw, 8rem)',
+      }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onMouseMove={handleMouseMove}
     >
+      {/* Orbit Background */}
+      {isDark && isLargeScreen && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: 'easeOut' }}
+          className="absolute inset-0 z-0"
+        >
+          <TechOrbit />
+        </motion.div>
+      )}
+
       {/* Grid – Background only */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        {/* Main grid — always visible, cyan at rest, cyan-greenish on hover */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+      >
         <div
           className="absolute inset-0 transition-all duration-500"
           style={{
@@ -44,7 +163,6 @@ const Intro = () => {
           }}
         />
 
-        {/* Mouse-following spotlight effect — only visible on hover */}
         <div
           className="absolute inset-0 transition-opacity duration-500"
           style={{
@@ -54,7 +172,6 @@ const Intro = () => {
         />
       </div>
 
-      {/* Additional fine dot grid for depth — always visible, color changes on hover */}
       <div
         className="pointer-events-none absolute inset-0 z-0 transition-all duration-700"
         style={{
@@ -64,60 +181,35 @@ const Intro = () => {
             : `radial-gradient(circle at 2px 2px, rgba(6, 182, 212, 0.2) 1.5px, transparent 1.5px)`,
           backgroundSize: '24px 24px',
         }}
+        aria-hidden="true"
       />
 
-      {/* Primary background gradient */}
-      <div className="from-primary/20 before:bg-primary/40 pointer-events-none absolute inset-0 z-0 bg-gradient-to-b to-transparent before:absolute before:top-10 before:left-1/2 before:h-[900px] before:w-[900px] before:-translate-x-1/2 before:rounded-full before:opacity-20 before:blur-[120px] before:content-['']" />
-
-      {/* Animated icons */}
-      <div className="hidden dark:xl:block">
-        <motion.div
-          initial={{ opacity: 0, y: 20, x: 120 }}
-          animate={{ opacity: 0.5, y: -100, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <Sparkle className="dark:fill-primary/8 dark:stroke-primary/0 fill-primary/5 stroke-primary/0 absolute top-15 right-20 h-25 w-25 rotate-45 transform animate-pulse drop-shadow-[0_0_6px_rgba(255,255,200,0.6)] lg:right-100" />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: -300, x: 120 }}
-          animate={{ opacity: 0.5, y: -100, x: 0 }}
-          transition={{ duration: 1.5 }}
-        >
-          <Zap className="dark:fill-primary/8 dark:stroke-primary/0 fill-primary/5 stroke-primary/0 absolute top-40 left-20 h-36 w-36 -rotate-12 transform animate-pulse drop-shadow-[0_0_6px_rgba(255,200,150,0.6)] lg:left-90" />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20, x: -120 }}
-          animate={{ opacity: 0.5, y: -100, x: 0 }}
-          transition={{ duration: 2 }}
-        >
-          <Star className="dark:fill-primary/7 dark:stroke-primary/0 absolute top-152 right-122 h-15 w-15 rotate-90 transform animate-pulse fill-cyan-500 stroke-cyan-500 drop-shadow-[0_0_6px_rgba(255,255,200,0.6)]" />
-          <Star className="dark:fill-primary/10 dark:stroke-primary/0 absolute top-152.5 right-105 h-22 w-22 rotate-45 transform animate-pulse fill-cyan-500 stroke-cyan-500 drop-shadow-[0_0_6px_rgba(255,255,200,0.6)]" />
-        </motion.div>
-      </div>
+      <div className="from-primary/20 before:bg-primary/40 pointer-events-none absolute inset-0 z-0 bg-linear-to-b to-transparent before:absolute before:top-10 before:left-1/2 before:h-225 before:w-225 before:-translate-x-1/2 before:rounded-full before:opacity-20 before:blur-[120px] before:content-['']" />
 
       {/* Content with a higher z-index (above the grid) */}
-      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
-        {/* Avatar with fade-in + scale animation */}
+      <div className="relative z-10 mx-auto max-w-4xl px-4 py-10 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
           className="mb-8 flex justify-center"
         >
-          <Image
-            src="/avatars/profile-avatar.png"
-            alt="profile picture"
-            width={130}
-            height={130}
-            loading="eager"
-            priority
-            className="rounded-full object-cover shadow-xl ring-4 ring-white dark:ring-gray-800"
-          />
+          <div className="relative h-37.5 w-37.5 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
+            <Image
+              src="/avatars/profile-avatar.png"
+              alt="profile picture"
+              fill
+              className="object-cover"
+              style={{
+                objectPosition: 'center',
+                transform: 'scale(1.6) translateX(-2px) translateY(16%)',
+              }}
+              loading="eager"
+              priority
+            />
+          </div>
         </motion.div>
 
-        {/* Main headline with slide-in animation */}
         <motion.h1
           initial={{ opacity: 0, y: 20, x: 120 }}
           animate={{ opacity: 1, y: 0, x: 0 }}
@@ -128,7 +220,6 @@ const Intro = () => {
           <span className="block text-cyan-500">with Precision & Style</span>
         </motion.h1>
 
-        {/* Subheadline with opposite slide-in direction */}
         <motion.p
           initial={{ opacity: 0, y: 20, x: -120 }}
           animate={{ opacity: 1, y: 0, x: 0 }}
@@ -139,14 +230,12 @@ const Intro = () => {
           web applications.
         </motion.p>
 
-        {/* Call-to-action buttons with upward fade animation */}
         <motion.div
           initial={{ opacity: 0, y: 120 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8 }}
           className="mt-10 flex justify-center gap-4"
         >
-          {/* Portfolio button */}
           <Link
             href="/portfolio"
             className="rounded-lg bg-amber-600 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600"
@@ -154,7 +243,6 @@ const Intro = () => {
             View Portfolio
           </Link>
 
-          {/* Contact button */}
           <Link
             href="/connect"
             className="rounded-lg border-2 border-cyan-300 px-10 py-3 font-bold text-cyan-500 transition-colors hover:border-2 hover:border-amber-500 hover:text-amber-600 dark:border-cyan-700 dark:text-gray-300 dark:hover:text-amber-400"

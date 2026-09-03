@@ -40,7 +40,6 @@ export const education = [
       'Agentic AI with LangGraph (memory, iteration, logic)',
       'Autonomous agents with reasoning and feedback loops',
       'Multi‑agent workflows using CrewAI orchestration',
-      'Conversation‑driven agents with AutoGen (AG2) and BeeAI',
     ],
   },
   {

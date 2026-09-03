@@ -123,8 +123,8 @@ const Intro = () => {
     <section
       className="relative min-h-screen overflow-hidden py-10"
       style={{
-        paddingTop: 'clamp(2.5rem, 5vw, 8rem)',
-        paddingBottom: 'clamp(2.5rem, 5vw, 8rem)',
+        paddingTop: 'clamp(2.5rem, 6vw, 8rem)',
+        paddingBottom: 'clamp(2.5rem, 6vw, 8rem)',
       }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -196,7 +196,7 @@ const Intro = () => {
         >
           <div className="relative h-37.5 w-37.5 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
             <Image
-              src="/avatars/profile-avatar.png"
+              src="/avatars/profile-avatar2.png"
               alt="profile picture"
               fill
               className="object-cover"

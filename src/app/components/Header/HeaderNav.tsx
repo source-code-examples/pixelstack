@@ -6,10 +6,38 @@ import { useTheme } from '../../context/ThemeContext'
 import Image from 'next/image'
 import ThemeSwitchButton from './ThemeSwitchButton'
 import MobileMenu from './MobileMenu'
+import { FaRobot } from 'react-icons/fa6'
+import { useState, useEffect } from 'react'
+import { useAgent } from '@/app/hooks/useAgent'
 
 const HeaderNav = () => {
   // Access the current theme from the custom ThemeContext
   const { theme } = useTheme()
+
+  // State for mobile detection (iPhone screens)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Access agent messages for unread count
+  const { messages } = useAgent()
+
+  // Count unread assistant messages for badge
+  const unreadCount = messages.filter((m) => m.role === 'assistant').length
+
+  // Check if we're on a mobile device (iPhone screens < 640px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Handle opening the AI chat
+  const handleOpenChat = () => {
+    const chatEvent = new CustomEvent('openChat')
+    window.dispatchEvent(chatEvent)
+  }
 
   // Navigation items for both desktop and mobile menus
   const menuItems = [
@@ -44,7 +72,6 @@ const HeaderNav = () => {
                 sizes="auto"
                 className="object-contain"
                 priority
-                // loading="eager"
               />
             </div>
           </Link>
@@ -76,10 +103,29 @@ const HeaderNav = () => {
             {/* Theme toggle button (light/dark mode) */}
             <ThemeSwitchButton />
           </ul>
-        </div>
 
-        {/* Mobile menu (hamburger + drawer) */}
-        <MobileMenu />
+          {/* Mobile right side icons (AI Chat + Theme toggle) */}
+          <div className="flex items-center gap-2 md:hidden">
+            {/* AI Chat Button - only on iPhone screens */}
+            {isMobile && (
+              <button
+                onClick={handleOpenChat}
+                className="relative flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium text-cyan-400 transition-colors hover:bg-cyan-500/10"
+                aria-label="Open AI Chat"
+              >
+                <FaRobot className="text-xl" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
+              </button>
+            )}
+
+            {/* Mobile Menu (Hamburger) */}
+            <MobileMenu />
+          </div>
+        </div>
       </div>
     </nav>
   )

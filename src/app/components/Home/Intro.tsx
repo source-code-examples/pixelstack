@@ -4,7 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useAnimationFrame } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
-import { SiReact, SiGit, SiNextdotjs } from 'react-icons/si'
+import {
+  SiReact,
+  SiGit,
+  SiNextdotjs,
+  SiTypescript,
+  SiAiohttp,
+} from 'react-icons/si'
 
 // Tech Orbit Component: Displays tech icons orbiting around a central point
 const TechOrbit = () => {
@@ -13,11 +19,13 @@ const TechOrbit = () => {
     { icon: SiReact, label: 'React' },
     { icon: SiGit, label: 'Git' },
     { icon: SiNextdotjs, label: 'Next.js' },
+    { icon: SiTypescript, label: 'TypeScript' },
+    { icon: SiAiohttp, label: 'AI HTTP' },
   ]
 
   // Same radii for SVG and icons
-  const orbitRadiusX = 650
-  const orbitRadiusY = 350
+  const orbitRadiusX = 620
+  const orbitRadiusY = 320
 
   const iconRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -121,13 +129,15 @@ const Intro = () => {
 
   return (
     <section
-      className="relative min-h-screen overflow-hidden py-10"
+      className="relative min-h-[70vh] overflow-hidden py-10 md:min-h-screen"
       style={{
-        paddingTop: 'clamp(2.5rem, 6vw, 8rem)',
-        paddingBottom: 'clamp(2.5rem, 6vw, 8rem)',
+        paddingTop: 'clamp(2rem, 5vw, 8rem)',
+        paddingBottom: 'clamp(2rem, 5vw, 8rem)',
       }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onTouchStart={() => setIsHovering(true)}
+      onTouchEnd={() => setIsHovering(false)}
       onMouseMove={handleMouseMove}
     >
       {/* Orbit Background */}
@@ -194,15 +204,15 @@ const Intro = () => {
           transition={{ duration: 1 }}
           className="mb-8 flex justify-center"
         >
-          <div className="relative h-37.5 w-37.5 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
+          <div className="relative h-42 w-42 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
             <Image
-              src="/avatars/profile-avatar2.png"
+              src="/avatars/profile-avatar.png"
               alt="profile picture"
               fill
               className="object-cover"
               style={{
                 objectPosition: 'center',
-                transform: 'scale(1.6) translateX(-2px) translateY(16%)',
+                transform: 'scale(1.6) translateX(-5px) translateY(16%)',
               }}
               loading="eager"
               priority
@@ -234,18 +244,18 @@ const Intro = () => {
           initial={{ opacity: 0, y: 120 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8 }}
-          className="mt-10 flex justify-center gap-4"
+          className="mt-10 flex flex-col justify-center gap-4 sm:flex-row"
         >
           <Link
             href="/portfolio"
-            className="rounded-lg bg-amber-600 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600"
+            className="w-full rounded-lg bg-amber-600 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600 sm:w-auto"
           >
             View Portfolio
           </Link>
 
           <Link
             href="/connect"
-            className="rounded-lg border-2 border-cyan-300 px-10 py-3 font-bold text-cyan-500 transition-colors hover:border-2 hover:border-amber-500 hover:text-amber-600 dark:border-cyan-700 dark:text-gray-300 dark:hover:text-amber-400"
+            className="w-full rounded-lg border-2 border-cyan-300 px-10 py-3 font-bold text-cyan-500 transition-colors hover:border-2 hover:border-amber-500 hover:text-amber-600 sm:w-auto dark:border-cyan-700 dark:text-gray-300 dark:hover:text-amber-400"
           >
             Contact Me
           </Link>

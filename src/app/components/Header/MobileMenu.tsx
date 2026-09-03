@@ -1,11 +1,6 @@
 'use client'
 
-import {
-  Bars3Icon,
-  MoonIcon,
-  SunIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { LightbulbIcon, LightbulbOffIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -34,7 +29,7 @@ const MobileMenu = () => {
     <div className="relative md:hidden">
       {/* Menu toggle button (hamburger or close icon) */}
       <button
-        className="absolute -top-16 right-0 z-50 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100 hover:text-cyan-500 dark:hover:bg-gray-800"
+        className="cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100 hover:text-cyan-500 dark:hover:bg-gray-800"
         onClick={toggle}
         aria-label="Toggle mobile menu"
       >
@@ -47,15 +42,15 @@ const MobileMenu = () => {
 
       {/* Mobile menu container */}
       {isOpen && (
-        <div className="w-full">
-          <div className="flex w-24 flex-col items-start space-y-1 py-2">
+        <div className="absolute top-full right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900">
+          <div className="flex flex-col items-start space-y-1 p-4">
             {/* Navigation links */}
             {menuItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={toggle} // Close menu after clicking a link
-                className="w-full px-6 py-1 text-left text-lg font-bold transition-colors hover:text-cyan-500"
+                className="w-full px-4 py-2 text-left text-lg font-bold transition-colors hover:text-cyan-500"
                 style={{
                   // Add subtle text shadow in dark mode for readability
                   textShadow: theme === 'dark' ? '2px 2px 0 black' : 'none',
@@ -66,11 +61,11 @@ const MobileMenu = () => {
             ))}
 
             {/* Divider before theme switch */}
-            <hr className="border-0.1 mt-2 ml-5 w-20 text-gray-400 dark:text-gray-500" />
+            <hr className="border-0.1 w-full text-gray-400 dark:text-gray-500" />
 
             {/* Theme toggle button */}
             <button
-              className="flex w-36 cursor-pointer items-center px-6 py-3 text-lg font-bold transition-colors hover:text-cyan-500"
+              className="flex w-full cursor-pointer items-center px-4 py-2 text-lg font-bold transition-colors hover:text-cyan-500"
               style={{
                 textShadow: theme === 'dark' ? '2px 2px 0 black' : 'none',
               }}

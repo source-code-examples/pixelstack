@@ -35,14 +35,14 @@ class AgentErrorBoundary extends Component<
 
   render() {
     if (this.state.hasError) {
-      // render nothing (or a minimal fallback) to keep the rest of the page intact
+      // Render nothing to keep the rest of the page intact
       return null
     }
     return this.props.children
   }
 }
 
-// returns a proactive message based on the current page
+// Returns a proactive message based on the current page
 function getProactiveMessage(pathname: string): string {
   if (pathname === '/portfolio')
     return 'Want me to explain any of these projects?'
@@ -55,7 +55,7 @@ function getProactiveMessage(pathname: string): string {
   return "Hi! I'm PixelStack — ask me anything about this developer's skills or projects."
 }
 
-// reusable tooltip wrapper
+// Reusable tooltip wrapper
 function Tooltip({
   text,
   position = 'top',
@@ -102,14 +102,37 @@ const AgentWidgetInner = () => {
   const [isProactiveDone, setIsProactiveDone] = useState(false)
   const [isNavigating, setIsNavigating] = useState(false)
   const [lastSentMessage, setLastSentMessage] = useState<string>('')
-  // true when the last assistant message has content during loading
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check if we're on a mobile device (iPhone screens)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640) // iPhone screens (< 640px)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Listen for custom event to open chat from mobile menu
+  useEffect(() => {
+    const handleOpenChat = () => {
+      setIsOpen(true)
+      setUnreadCount(0)
+    }
+
+    window.addEventListener('openChat', handleOpenChat)
+    return () => window.removeEventListener('openChat', handleOpenChat)
+  }, [])
+
+  // True when the last assistant message has content during loading
   const firstTokenReceived =
     isLoading &&
     messages.length > 0 &&
     messages[messages.length - 1].role === 'assistant' &&
     messages[messages.length - 1].content.length > 0
 
-  // refs for auto‑scroll
+  // Refs for auto-scroll
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const isUserScrollingRef = useRef(false)
   const prevMessagesLength = useRef(messages.length)
@@ -125,21 +148,21 @@ const AgentWidgetInner = () => {
     }
   }, [isOpen])
 
-  // auto‑scroll to bottom whenever messages change (new message, streaming update, etc.)
+  // Auto-scroll to bottom whenever messages change
   useEffect(() => {
     const container = messagesContainerRef.current
     if (!container) return
 
-    // if user manually scrolled up, don't auto‑scroll
+    // Don't auto-scroll if user manually scrolled up
     if (isUserScrollingRef.current) return
 
-    // use requestAnimationFrame to ensure we scroll after the DOM has updated
+    // Use requestAnimationFrame to ensure we scroll after DOM updates
     requestAnimationFrame(() => {
       container.scrollTop = container.scrollHeight
     })
   }, [messages])
 
-  // manual scroll detection – stop auto‑scrolling while user interacts
+  // Manual scroll detection – stop auto-scrolling while user interacts
   useEffect(() => {
     const container = messagesContainerRef.current
     if (!container) return
@@ -156,7 +179,7 @@ const AgentWidgetInner = () => {
     return () => container.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // proactive behavior
+  // Proactive behavior - show unread badge after 30 seconds
   useEffect(() => {
     if (isProactiveDone) return
     if (hasShownProactive) return
@@ -170,7 +193,7 @@ const AgentWidgetInner = () => {
     return () => clearTimeout(timer)
   }, [pathname, hasShownProactive, isOpen, isProactiveDone])
 
-  // add proactive message when chat opens
+  // Add proactive message when chat opens
   useEffect(() => {
     if (
       isOpen &&
@@ -193,7 +216,7 @@ const AgentWidgetInner = () => {
     addMessage,
   ])
 
-  // track new messages for unread badge
+  // Track new messages for unread badge
   useEffect(() => {
     if (!isOpen && messages.length > prevMessagesLength.current) {
       const newMessages = messages.slice(prevMessagesLength.current)
@@ -224,7 +247,7 @@ const AgentWidgetInner = () => {
     clearMessages()
   }
 
-  // send handler with loading, navigation and state management
+  // Send handler with loading, navigation and state management
   const handleSend = useCallback(async () => {
     // Prevent duplicate sends
     if (isLoading || isNavigatingRef.current) {
@@ -238,36 +261,36 @@ const AgentWidgetInner = () => {
       return
     }
 
-    // store the message before sending
+    // Store the message before sending
     setLastSentMessage(trimmedInput)
     console.log(`Sending: "${trimmedInput}"`)
 
-    // force auto‑scroll after sending a new message
+    // Force auto-scroll after sending a new message
     isUserScrollingRef.current = false
 
     try {
-      // send message and wait for tool action (resolves after stream finishes)
+      // Send message and wait for tool action (resolves after stream finishes)
       const toolAction = await sendMessage()
 
       console.log('Tool action result:', toolAction)
 
-      // handle navigation if tool action is prefill
+      // Handle navigation if tool action is prefill
       if (toolAction && toolAction.type === 'prefill_contact_form') {
         const topic = toolAction.topic
         const targetUrl = `/connect?topic=${topic}`
 
         console.log(`Prefill detected! Navigating to: ${targetUrl}`)
 
-        // set navigation state
+        // Set navigation state
         isNavigatingRef.current = true
         setIsNavigating(true)
 
-        // wait for user to read the reply, then close widget and navigate
+        // Wait for user to read the reply, then close widget and navigate
         setTimeout(() => {
-          // close widget first so the transition feels smooth
+          // Close widget first so the transition feels smooth
           setIsOpen(false)
 
-          // wait for close animation to finish, then navigate
+          // Wait for close animation to finish, then navigate
           setTimeout(() => {
             router.push(targetUrl)
             isNavigatingRef.current = false
@@ -284,7 +307,7 @@ const AgentWidgetInner = () => {
     }
   }, [input, isLoading, sendMessage, router])
 
-  // handle enter key
+  // Handle enter key
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && !e.shiftKey) {
@@ -295,15 +318,15 @@ const AgentWidgetInner = () => {
     [handleSend],
   )
 
-  // hide AgentWidget on admin pages
+  // Hide AgentWidget on admin pages
   if (pathname.startsWith('/admin')) {
     return null
   }
 
   return (
     <>
-      {/* FLOATING TOGGLE BUTTON - only visible when chat is closed */}
-      {!isOpen && (
+      {/* FLOATING TOGGLE BUTTON - Only visible when chat is closed AND not on mobile */}
+      {!isOpen && !isMobile && (
         <motion.button
           key={pathname}
           initial={{ opacity: 0 }}
@@ -311,21 +334,21 @@ const AgentWidgetInner = () => {
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={handleToggle}
-          className="group fixed right-5 bottom-5 z-50 flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-500 px-2 py-2 font-medium text-white shadow-xl shadow-cyan-500/20 transition-all duration-200 hover:scale-103 hover:shadow-2xl hover:shadow-cyan-500/40 dark:border-cyan-500/60 dark:bg-gradient-to-r dark:from-cyan-600/30 dark:to-cyan-800/90"
+          className="group fixed right-5 bottom-5 z-50 flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-500 px-3 py-3 font-medium text-white shadow-xl shadow-cyan-500/20 transition-all duration-200 hover:scale-103 hover:shadow-2xl hover:shadow-cyan-500/40 sm:px-2 sm:py-2 dark:border-cyan-500/60 dark:bg-gradient-to-r dark:from-cyan-600/30 dark:to-cyan-800/90"
         >
-          {/* pulsing ring animation - only when chat is closed */}
+          {/* Pulsing ring animation - only when chat is closed */}
           {unreadCount > 0 && (
             <span className="absolute inset-0 animate-ping rounded-xl border-2 border-cyan-400 opacity-75" />
           )}
 
           <div className="relative flex flex-col items-center gap-0.5 leading-none">
-            <FaRobot className="text-3xl text-amber-500 dark:text-amber-400" />
-            <span className="text-xs tracking-wider text-amber-400">
+            <FaRobot className="text-2xl text-amber-500 sm:text-3xl dark:text-amber-400" />
+            <span className="text-[10px] tracking-wider text-amber-400 sm:text-xs">
               <em className="text-cyan-600 dark:text-cyan-400">Pixel</em>
               <em className="text-amber-600 dark:text-amber-400">Stack</em>
             </span>
 
-            {/* unread badge - only when chat is closed */}
+            {/* Unread badge - only when chat is closed */}
             {unreadCount > 0 && (
               <span className="absolute -top-1 -right-1 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-lg shadow-red-500/50">
                 {unreadCount > 9 ? '9+' : unreadCount}
@@ -333,8 +356,8 @@ const AgentWidgetInner = () => {
             )}
           </div>
 
-          {/* tooltip */}
-          <span className="pointer-events-none absolute -top-3 right-full -mr-2 -translate-y-1/2 rounded-full rounded-br-none border border-cyan-400/50 bg-gray-200 px-2 py-2 text-[10px] whitespace-nowrap text-gray-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 dark:bg-gray-800 dark:text-gray-200">
+          {/* Tooltip - only visible on desktop */}
+          <span className="pointer-events-none absolute -top-3 right-full -mr-2 hidden -translate-y-1/2 rounded-full rounded-br-none border border-cyan-400/50 bg-gray-200 px-2 py-2 text-[10px] whitespace-nowrap text-gray-700 opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 sm:block dark:bg-gray-800 dark:text-gray-200">
             Chat with <p>PixelStack AI</p>
           </span>
         </motion.button>
@@ -347,7 +370,7 @@ const AgentWidgetInner = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, ease: 'easeInOut' }}
-            className="fixed right-3 bottom-20 z-50 flex h-[480px] w-[calc(100vw-1.5rem)] max-w-[350px] flex-col overflow-hidden rounded-2xl border border-gray-200/50 bg-white shadow-2xl shadow-black/20 transition-all duration-300 dark:border-gray-700/50 dark:bg-gray-900 dark:shadow-black/50"
+            className="fixed right-3 bottom-24 z-50 flex h-[480px] w-[calc(100vw-2rem)] max-w-[350px] flex-col overflow-hidden rounded-2xl border border-gray-200/50 bg-white shadow-2xl shadow-black/20 transition-all duration-300 sm:right-3 sm:bottom-20 sm:w-[calc(100vw-1.5rem)] dark:border-gray-700/50 dark:bg-gray-900 dark:shadow-black/50"
           >
             {/* HEADER */}
             <div className="flex items-center justify-between border-b-1 border-gray-500/40 px-3 py-3 text-white dark:bg-gradient-to-r dark:from-cyan-600/30 dark:to-cyan-800/90">
@@ -366,7 +389,7 @@ const AgentWidgetInner = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {/* clear chat button — only visible when messages exist */}
+                {/* Clear chat button — only visible when messages exist */}
                 {messages.length > 0 && (
                   <Tooltip text="Clear chat history">
                     <button
@@ -380,7 +403,7 @@ const AgentWidgetInner = () => {
                   </Tooltip>
                 )}
 
-                {/* close button */}
+                {/* Close button */}
                 <Tooltip text="Close chat">
                   <button
                     onClick={() => setIsOpen(false)}
@@ -426,7 +449,7 @@ const AgentWidgetInner = () => {
                       )}
                     </div>
 
-                    {/* bubble */}
+                    {/* Bubble */}
                     <div
                       className={`mt-3 -mr-3 -mb-1 max-w-[80%] rounded-2xl px-2 py-1.5 text-sm ${
                         msg.role === 'user'
@@ -472,7 +495,7 @@ const AgentWidgetInner = () => {
                 ))
               )}
 
-              {/* loading indicator – only shown while loading and no token has arrived yet */}
+              {/* Loading indicator – only shown while loading and no token has arrived yet */}
               {isLoading && !firstTokenReceived && (
                 <div className="flex items-start gap-2.5">
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-500">
@@ -539,7 +562,7 @@ const AgentWidgetInner = () => {
   )
 }
 
-// wrap with error boundary
+// Wrap with error boundary
 const AgentWidget = () => (
   <AgentErrorBoundary>
     <AgentWidgetInner />

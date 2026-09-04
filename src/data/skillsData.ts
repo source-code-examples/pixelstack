@@ -37,8 +37,7 @@ export const backendSkills = [
   },
   { label: 'Python • Flask • Django', level: 50, delay: 0.6 },
   {
-    label:
-      'Databases (MongoDB • Prisma • Supabase • PostgreSQL • MySQL • SQL/NoSQL)',
+    label: 'Databases (MongoDB • Prisma • Supabase • PostgreSQL • MySQL • SQL)',
     level: 70,
     delay: 0.8,
   },

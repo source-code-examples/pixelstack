@@ -206,13 +206,13 @@ const Intro = () => {
         >
           <div className="relative h-42 w-42 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
             <Image
-              src="/avatars/profile-avatar.png"
+              src="/avatars/profile-avatar2.png"
               alt="profile picture"
               fill
               className="object-cover"
               style={{
                 objectPosition: 'center',
-                transform: 'scale(1.6) translateX(-5px) translateY(16%)',
+                transform: 'scale(1.6) translateX(-2px) translateY(16%)',
               }}
               loading="eager"
               priority

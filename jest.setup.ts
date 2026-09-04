@@ -47,7 +47,7 @@ global.IntersectionObserver = class IntersectionObserver {
   unobserve() {
     return null
   }
-} as any
+} as unknown as typeof globalThis.IntersectionObserver
 
 /**
  * Mock: ResizeObserver
@@ -65,7 +65,7 @@ global.ResizeObserver = class ResizeObserver {
   unobserve() {
     return null
   }
-} as any
+} as unknown as typeof globalThis.ResizeObserver
 
 /**
  * Mock environment variables for API routes

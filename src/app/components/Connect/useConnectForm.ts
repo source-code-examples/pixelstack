@@ -25,8 +25,13 @@ export const useConnectForm = () => {
   const [errors, setErrors] = useState<Partial<FormData>>({})
   const isSubmitting = status.state === 'submitting'
 
+  const resetForm = () => {
+    setFormData({ name: '', email: '', topic: '', message: '' })
+    setErrors({})
+    setStatus({ state: 'pristine' })
+  }
+
   // auto-dismiss success/error messages after 3 seconds
-  // resets form only on successful submission
   useEffect(() => {
     if (status.state === 'submitted' || status.state === 'failed') {
       const timer = setTimeout(() => {
@@ -85,12 +90,6 @@ export const useConnectForm = () => {
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
-  }
-
-  const resetForm = () => {
-    setFormData({ name: '', email: '', topic: '', message: '' })
-    setErrors({})
-    setStatus({ state: 'pristine' })
   }
 
   // submit form data to API endpoint

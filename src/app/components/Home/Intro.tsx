@@ -25,7 +25,7 @@ const TechOrbit = () => {
 
   // Same radii for SVG and icons
   const orbitRadiusX = 620
-  const orbitRadiusY = 320
+  const orbitRadiusY = 330
 
   const iconRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -129,10 +129,10 @@ const Intro = () => {
 
   return (
     <section
-      className="relative min-h-[70vh] overflow-hidden py-10 md:min-h-screen"
+      className="relative min-h-[80vh] overflow-hidden py-10 lg:min-h-screen"
       style={{
-        paddingTop: 'clamp(2rem, 5vw, 8rem)',
-        paddingBottom: 'clamp(2rem, 5vw, 8rem)',
+        paddingTop: 'clamp(2rem, 8vw, 8rem)',
+        paddingBottom: 'clamp(2rem, 2vw, 8rem)',
       }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}

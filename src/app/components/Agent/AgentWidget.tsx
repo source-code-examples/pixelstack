@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback, Component } from 'react'
-import { useAgent } from '@/app/hooks/useAgent'
+import { useAgentContext } from '@/app/context/AgentContext'
 import {
   FaRobot,
   FaUser,
@@ -15,7 +15,7 @@ import remarkGfm from 'remark-gfm'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 
-// --- Error Boundary to prevent chat crashes from affecting the whole site ---
+// Error Boundary to prevent chat crashes from affecting the whole site
 class AgentErrorBoundary extends Component<
   { children: React.ReactNode },
   { hasError: boolean }
@@ -94,11 +94,14 @@ const AgentWidgetInner = () => {
     sendMessage,
     addMessage,
     clearMessages,
-  } = useAgent()
+    isOpen,
+    openChat,
+    closeChat,
+    unreadCount,
+    addUnread,
+  } = useAgentContext()
 
-  const [isOpen, setIsOpen] = useState(false)
   const [hasShownProactive, setHasShownProactive] = useState(false)
-  const [unreadCount, setUnreadCount] = useState(0)
   const [isProactiveDone, setIsProactiveDone] = useState(false)
   const [isNavigating, setIsNavigating] = useState(false)
   const [lastSentMessage, setLastSentMessage] = useState<string>('')
@@ -112,17 +115,6 @@ const AgentWidgetInner = () => {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  // Listen for custom event to open chat from mobile menu
-  useEffect(() => {
-    const handleOpenChat = () => {
-      setIsOpen(true)
-      setUnreadCount(0)
-    }
-
-    window.addEventListener('openChat', handleOpenChat)
-    return () => window.removeEventListener('openChat', handleOpenChat)
   }, [])
 
   // True when the last assistant message has content during loading
@@ -186,7 +178,7 @@ const AgentWidgetInner = () => {
     if (isOpen) return
 
     const timer = setTimeout(() => {
-      setUnreadCount(1)
+      addUnread(1)
       setHasShownProactive(true)
     }, 30_000)
 
@@ -224,22 +216,17 @@ const AgentWidgetInner = () => {
         (msg) => msg.role === 'assistant',
       )
       if (agentMessages.length > 0) {
-        setUnreadCount((prev) => prev + agentMessages.length)
+        addUnread(agentMessages.length)
       }
     }
     prevMessagesLength.current = messages.length
   }, [messages, isOpen])
 
-  const handleOpenChat = () => {
-    setIsOpen(true)
-    setUnreadCount(0)
-  }
-
   const handleToggle = () => {
     if (isOpen) {
-      setIsOpen(false)
+      closeChat()
     } else {
-      handleOpenChat()
+      openChat()
     }
   }
 
@@ -288,7 +275,7 @@ const AgentWidgetInner = () => {
         // Wait for user to read the reply, then close widget and navigate
         setTimeout(() => {
           // Close widget first so the transition feels smooth
-          setIsOpen(false)
+          closeChat()
 
           // Wait for close animation to finish, then navigate
           setTimeout(() => {
@@ -406,7 +393,7 @@ const AgentWidgetInner = () => {
                 {/* Close button */}
                 <Tooltip text="Close chat">
                   <button
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => closeChat()}
                     className="flex h-5 w-6 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/20"
                   >
                     <FaTimes className="rounded-xl border p-1 text-2xl text-amber-500/70" />

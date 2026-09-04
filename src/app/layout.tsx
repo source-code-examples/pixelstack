@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import HeaderNav from './components/Header/HeaderNav'
 import { ThemeProvider } from './context/ThemeContext'
+import { AgentProvider } from './context/AgentContext'
 import Footer from './components/Footer/Footer'
 import AgentWidget from './components/Agent/AgentWidget'
 import Script from 'next/script'
@@ -9,9 +10,7 @@ import Script from 'next/script'
 const ionosWebsite = process.env.NEXT_PUBLIC_IONOS_WEBSITE
 
 /**
- * Global metadata for the entire application.
- * This defines SEO information, Open Graph data,
- * and the base URL for all metadata links.
+ * Global metadata for entire app -> defines SEO information, Open Graph data + base URL for metadata links
  */
 export const metadata: Metadata = {
   title: 'PixelStack',
@@ -39,17 +38,21 @@ export default function RootLayout({
       >
         {/* ThemeProvider makes the theme accessible across the entire app */}
         <ThemeProvider>
-          {/* Global navigation bar */}
-          <HeaderNav />
+          {/* AgentProvider gives HeaderNav and AgentWidget one shared
+              conversation/unread state instead of two independent copies */}
+          <AgentProvider>
+            {/* Global navigation bar */}
+            <HeaderNav />
 
-          {/* Main content area with spacing below the fixed header */}
-          <main className="min-h-screen pt-24">{children}</main>
+            {/* Main content area with spacing below the fixed header */}
+            <main className="min-h-screen pt-24">{children}</main>
 
-          {/* Global footer */}
-          <Footer />
+            {/* Global footer */}
+            <Footer />
 
-          {/* AI-powered agent — floating widget visible on all pages */}
-          <AgentWidget />
+            {/* AI-powered agent — floating widget visible on all pages */}
+            <AgentWidget />
+          </AgentProvider>
         </ThemeProvider>
 
         {/* Self-hosted Umami analytics — tracks visits across both the

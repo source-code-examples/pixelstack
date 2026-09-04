@@ -8,7 +8,7 @@ import ThemeSwitchButton from './ThemeSwitchButton'
 import MobileMenu from './MobileMenu'
 import { FaRobot } from 'react-icons/fa6'
 import { useState, useEffect } from 'react'
-import { useAgent } from '@/app/hooks/useAgent'
+import { useAgentContext } from '@/app/context/AgentContext'
 
 const HeaderNav = () => {
   // Access the current theme from the custom ThemeContext
@@ -17,13 +17,12 @@ const HeaderNav = () => {
   // State for mobile detection (iPhone screens)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Access agent messages for unread count
-  const { messages } = useAgent()
+  // Shared agent state — same source as floating AgentWidget, so the
+  // badge here always reflects the real unread count and resetting it in
+  // one place resets it everywhere
+  const { unreadCount, openChat } = useAgentContext()
 
-  // Count unread assistant messages for badge
-  const unreadCount = messages.filter((m) => m.role === 'assistant').length
-
-  // Check if we're on a mobile device (iPhone screens < 640px)
+  // Check if beeing on mobile device (iPhone screens < 640px)
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 640)
@@ -32,12 +31,6 @@ const HeaderNav = () => {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
-  // Handle opening the AI chat
-  const handleOpenChat = () => {
-    const chatEvent = new CustomEvent('openChat')
-    window.dispatchEvent(chatEvent)
-  }
 
   // Navigation items for both desktop and mobile menus
   const menuItems = [
@@ -90,7 +83,6 @@ const HeaderNav = () => {
                       isActive ? 'font-bold text-cyan-500' : 'font-semibold'
                     }`}
                     style={{
-                      // Add subtle text shadow in dark mode for readability
                       textShadow: theme === 'dark' ? '1px 1px 0 black' : 'none',
                     }}
                   >
@@ -109,7 +101,7 @@ const HeaderNav = () => {
             {/* AI Chat Button - only on iPhone screens */}
             {isMobile && (
               <button
-                onClick={handleOpenChat}
+                onClick={openChat}
                 className="relative flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium text-cyan-400 transition-colors hover:bg-cyan-500/10"
                 aria-label="Open AI Chat"
               >

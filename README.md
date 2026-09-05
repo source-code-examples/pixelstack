@@ -106,6 +106,8 @@ The project is deployed on Vercel and IONOS.
 - [Interactive Grid](#interactive-grid)
 - [Dark Mode](#dark-mode)
 - [Testing](#testing)
+- [Analytics](#analytics)
+- [Error Tracking](#error-tracking)
 - [Upcoming Work](#upcoming-work)
 - [License](#license)
 
@@ -154,6 +156,7 @@ The project is deployed on Vercel and IONOS.
 | Markdown         | react-markdown + remark-gfm (AI chat widget only) |
 | Testing          | Jest, Playwright                                  |
 | Analytics        | Self-hosted Umami (Vercel + Neon Postgres)        |
+| Error Tracking   | Sentry                                            |
 | Deployment       | Vercel (custom domain via IONOS DNS)              |
 
 ---
@@ -197,7 +200,7 @@ The project is deployed on Vercel and IONOS.
 │   │   ├── 📂 portfolio            # Portfolio overview
 │   │   ├── 📂 posts                # Blog system — pages fetch from PostgreSQL, render stored HTML
 │   │   ├── 📂 profile              # Profile page
-│   │   ├── 📂 context              # ThemeContext provider
+│   │   ├── 📂 context              # ThemeContext, AgentContext (shared chat state)
 │   │   ├── 📄 layout.tsx
 │   │   ├── 📄 globals.css
 │   │   └── 📄 page.tsx             # Homepage
@@ -235,6 +238,14 @@ The project is deployed on Vercel and IONOS.
 ├── 📄 jest.config.ts
 ├── 📄 playwright.config.ts
 ├── 📄 package.json
+├── 📂 .github
+│   └── 📂 workflows
+│       └── 📄 ci.yml            # Lint + unit tests on push/PR
+│
+├── 📄 instrumentation.ts        # Loads Sentry config per runtime
+├── 📄 sentry.client.config.ts
+├── 📄 sentry.server.config.ts
+├── 📄 sentry.edge.config.ts
 └── 📄 README.md
 ```
 

@@ -386,7 +386,10 @@ AI Assistant: "I've just opened the contact form with "Job Offer" pre-selected f
 ```bash
 DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxx
 DEEPSEEK_MODEL=deepseek-v4-flash
+NEXT_PUBLIC_SENTRY_DSN=https://xxxxxxxx@xxxxxxx.ingest.sentry.io/xxxxxxx
 ```
+
+Optional, for readable stack traces via source map uploads (see [Sentry docs](https://docs.sentry.io/platforms/javascript/guides/nextjs/sourcemaps/)): `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`.
 
 ### Example questions
 
@@ -499,6 +502,17 @@ Since `pixelstack.me` (IONOS) is a custom domain pointing to the same Vercel dep
 - Self-hosted, so visitor data stays fully under my own control
 - Tracks visitors, page views, sessions, and referrers in real time
 - All-time visitor stats are also surfaced directly in the admin dashboard via a server-side widget that authenticates against Umami's login endpoint (self-hosted Umami has no persistent API keys)
+
+---
+
+Runtime errors are tracked via **[Sentry](https://sentry.io)**, wired into all three Next.js runtimes:
+
+- Client-side errors (`sentry.client.config.ts`)
+- Server-side errors from API routes, e.g. `/api/connect`, `/api/agent` (`sentry.server.config.ts`)
+- Edge runtime errors from `src/middleware.ts` (`sentry.edge.config.ts`)
+- Unhandled request errors are captured centrally via `instrumentation.ts`
+
+Sentry is disabled outside of `NODE_ENV=production` to keep local/CI noise out of the dashboard.
 
 ---
 

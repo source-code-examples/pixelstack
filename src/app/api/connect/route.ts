@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import * as Sentry from '@sentry/nextjs'
 import { isAllowedOrigin } from '@/lib/origin'
 import { connectRateLimit } from '@/lib/rateLimit'
 
@@ -180,6 +181,11 @@ export async function POST(request: Request) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Resend error (notify):', notifyError)
       }
+      Sentry.captureMessage('Resend notify email failed', {
+        level: 'error',
+        tags: { route: 'api/connect' },
+        extra: { notifyError },
+      })
       return NextResponse.json(
         { message: 'Failed to send message. Please try again.' },
         { status: 500 },
@@ -271,6 +277,7 @@ export async function POST(request: Request) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Unexpected error in /api/connect:', error)
     }
+    Sentry.captureException(error, { tags: { route: 'api/connect' } })
 
     const errorMessage =
       error instanceof Error ? error.message : 'An unexpected error occurred.'

@@ -206,13 +206,13 @@ const Intro = () => {
         >
           <div className="relative h-42 w-42 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
             <Image
-              src="/avatars/profile-avatar2.png"
+              src="/avatars/profile-avatar7.png"
               alt="profile picture"
               fill
               className="object-cover"
               style={{
                 objectPosition: 'center',
-                transform: 'scale(1.6) translateX(-2px) translateY(16%)',
+                transform: 'scale(1.6) translateX(-23px) translateY(16%)',
               }}
               loading="eager"
               priority
@@ -248,7 +248,7 @@ const Intro = () => {
         >
           <Link
             href="/portfolio"
-            className="w-full rounded-lg bg-amber-600 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600 sm:w-auto"
+            className="w-full rounded-lg bg-amber-600/90 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600 sm:w-auto"
           >
             View Portfolio
           </Link>

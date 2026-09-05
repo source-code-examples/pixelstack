@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import * as Sentry from '@sentry/nextjs'
 import { getAgentContext, logAgentContext } from '@/data/agentContext'
 import { agentRateLimit } from '@/lib/rateLimit'
 
@@ -145,7 +146,6 @@ export async function POST(request: Request) {
 
     // prepare streaming response
     const encoder = new TextEncoder()
-    const decoder = new TextDecoder()
 
     // accumulator for potential tool call (DeepSeek sends fragments in separate chunks)
     let accumulatedToolCall: {
@@ -283,6 +283,9 @@ export async function POST(request: Request) {
           controller.close()
         } catch (error) {
           console.error('Stream processing error:', error)
+          Sentry.captureException(error, {
+            tags: { route: 'api/agent', phase: 'stream' },
+          })
           controller.error(error)
         }
       },
@@ -299,6 +302,7 @@ export async function POST(request: Request) {
   } catch (error) {
     // error handling
     console.error('Agent API error:', error)
+    Sentry.captureException(error, { tags: { route: 'api/agent' } })
 
     if (error instanceof Error) {
       if (error.message.includes('API key')) {

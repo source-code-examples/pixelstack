@@ -107,7 +107,17 @@ const ConnectForm = () => {
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
         {/* Left side: contact info */}
-        <div className="space-y-8 pt-4">
+
+        <div className="relative space-y-8 pt-4">
+          {/* Decorative horizontal lines */}
+          <div
+            className="flex flex-col gap-2 pt-2 opacity-60 dark:opacity-20"
+            aria-hidden="true"
+          >
+            <div className="h-0.75 w-full rounded-full bg-cyan-500" />
+            <div className="h-0.75 w-full rounded-full bg-amber-500" />
+          </div>
+
           <h2 className="text-2xl font-semibold">Get in Touch</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400">
             If you have any questions or inquiries, feel free to reach out.
@@ -137,6 +147,24 @@ const ConnectForm = () => {
                   </div>
                 </div>
 
+                {/* Location */}
+                <div className="group flex items-center gap-4">
+                  <motion.div
+                    whileHover={{
+                      y: [0, -6, 0],
+                      transition: { duration: 0.4, ease: 'easeOut' },
+                    }}
+                  >
+                    <FaMapLocationDot className="h-6 w-6 text-cyan-600" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-semibold">Location</h3>
+                    <p className="text-lg text-gray-600 dark:text-gray-400">
+                      {location}
+                    </p>
+                  </div>
+                </div>
+
                 {/* GitHub */}
                 <div className="group flex items-center gap-4">
                   <motion.div
@@ -160,26 +188,17 @@ const ConnectForm = () => {
                     </Link>
                   </div>
                 </div>
-
-                {/* Location */}
-                <div className="group flex items-center gap-4">
-                  <motion.div
-                    whileHover={{
-                      y: [0, -6, 0],
-                      transition: { duration: 0.4, ease: 'easeOut' },
-                    }}
-                  >
-                    <FaMapLocationDot className="h-6 w-6 text-cyan-600" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-semibold">Location</h3>
-                    <p className="text-lg text-gray-600 dark:text-gray-400">
-                      {location}
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
+          </div>
+
+          {/* Decorative horizontal lines */}
+          <div
+            className="flex flex-col gap-2 pt-2 opacity-60 dark:opacity-20"
+            aria-hidden="true"
+          >
+            <div className="h-0.75 w-full rounded-full bg-amber-500" />
+            <div className="h-0.75 w-full rounded-full bg-cyan-500" />
           </div>
         </div>
 

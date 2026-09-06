@@ -22,6 +22,8 @@ An animated and responsive portfolio for web apps — built with **Next.js**, **
 
 Comes with: portfolio showcase, a **database-backed blog system**, contact form with real email delivery and auto-reply, newsletter subscription with admin notification, search for portfolio and posts, interactive grid hero section with mouse tracking, profile page, dark/light mode and an AI-powered assistant (PixelStack AI) that answers questions about skills, projects, and IT education — and intelligently prefills the contact form based on your intent. All emails delivered via Resend.
 
+![PixelStack Demo](docs/pixelstack-demo.gif)
+
 ## Live Demo
 
 The project is deployed on Vercel and IONOS.

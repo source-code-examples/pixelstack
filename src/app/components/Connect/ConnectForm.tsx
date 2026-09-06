@@ -4,7 +4,7 @@ import { motion, Variants } from 'framer-motion'
 import { useConnectForm } from './useConnectForm'
 import SuccessMessage from './../MessagesUI/SuccessMessage'
 import ErrorMessage from './../MessagesUI/ErrorMessage'
-import { FaEnvelope } from 'react-icons/fa'
+import { FaEnvelope, FaGithub } from 'react-icons/fa'
 import { FaMapLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -133,6 +133,30 @@ const ConnectForm = () => {
                       className="text-lg text-gray-600 hover:text-cyan-600 dark:text-gray-400"
                     >
                       {email}
+                    </Link>
+                  </div>
+                </div>
+
+                {/* GitHub */}
+                <div className="group flex items-center gap-4">
+                  <motion.div
+                    whileHover={{
+                      rotate: [0, -15, 15, 0],
+                      scale: [1, 1.15, 1.15, 1],
+                      transition: { duration: 0.45, ease: 'easeInOut' },
+                    }}
+                  >
+                    <FaGithub className="h-6 w-6 text-cyan-600" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-semibold">GitHub</h3>
+                    <Link
+                      href="https://github.com/wkleus"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg text-gray-600 hover:text-cyan-600 dark:text-gray-400"
+                    >
+                      github.com/wkleus
                     </Link>
                   </div>
                 </div>

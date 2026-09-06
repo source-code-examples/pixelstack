@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { useConnectForm } from './useConnectForm'
 import SuccessMessage from './../MessagesUI/SuccessMessage'
 import ErrorMessage from './../MessagesUI/ErrorMessage'
@@ -24,6 +24,29 @@ const VALID_TOPICS = [
 ] as const
 
 type ValidTopic = (typeof VALID_TOPICS)[number]
+
+// Stagger container for the form fields — each direct child fades/slides in
+// slightly after the previous one, driven by the "field" variant below
+const formContainerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+}
+
+// Individual field entrance — subtle fade + slide, matches the rest of the
+// site's motion language (Intro, Profile timeline) without being distracting
+const fieldVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: 'easeOut' },
+  },
+}
 
 const ConnectForm = () => {
   const email = process.env.NEXT_PUBLIC_EMAIL
@@ -94,8 +117,15 @@ const ConnectForm = () => {
             <div className="flex items-center gap-3">
               <div className="space-y-5">
                 {/* Email */}
-                <div className="flex items-center gap-4">
-                  <FaEnvelope className="h-6 w-6 text-cyan-600" />
+                <div className="group flex items-center gap-4">
+                  <motion.div
+                    whileHover={{
+                      rotate: [0, -10, 10, -6, 6, 0],
+                      transition: { duration: 0.5, ease: 'easeInOut' },
+                    }}
+                  >
+                    <FaEnvelope className="h-6 w-6 text-cyan-600" />
+                  </motion.div>
                   <div>
                     <h3 className="font-semibold">Email</h3>
                     <Link
@@ -108,8 +138,15 @@ const ConnectForm = () => {
                 </div>
 
                 {/* Location */}
-                <div className="flex items-center gap-4">
-                  <FaMapLocationDot className="h-6 w-6 text-cyan-600" />
+                <div className="group flex items-center gap-4">
+                  <motion.div
+                    whileHover={{
+                      y: [0, -6, 0],
+                      transition: { duration: 0.4, ease: 'easeOut' },
+                    }}
+                  >
+                    <FaMapLocationDot className="h-6 w-6 text-cyan-600" />
+                  </motion.div>
                   <div>
                     <h3 className="font-semibold">Location</h3>
                     <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -124,9 +161,15 @@ const ConnectForm = () => {
 
         {/* Right side: form */}
         <div className="mt-3 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-900/70">
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <motion.form
+            onSubmit={handleSubmit}
+            className="space-y-4"
+            variants={formContainerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Name */}
-            <div>
+            <motion.div variants={fieldVariants}>
               <label htmlFor="name" className="mb-1 block text-sm font-medium">
                 Name
               </label>
@@ -144,10 +187,10 @@ const ConnectForm = () => {
               {errors.name && (
                 <p className="mt-1 text-sm text-red-500">{errors.name}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Email */}
-            <div>
+            <motion.div variants={fieldVariants}>
               <label
                 htmlFor="email"
                 className="mb-1.5 block text-sm font-medium"
@@ -169,10 +212,10 @@ const ConnectForm = () => {
               {errors.email && (
                 <p className="mt-1 text-sm text-red-500">{errors.email}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Topic */}
-            <div>
+            <motion.div variants={fieldVariants}>
               <label
                 htmlFor="topic"
                 className="mb-1.5 block text-sm font-medium"
@@ -221,10 +264,10 @@ const ConnectForm = () => {
               {errors.topic && (
                 <p className="mt-1 text-sm text-red-500">{errors.topic}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Message */}
-            <div>
+            <motion.div variants={fieldVariants}>
               <label
                 htmlFor="message"
                 className="mb-1.5 block text-sm font-medium"
@@ -247,16 +290,17 @@ const ConnectForm = () => {
               {errors.message && (
                 <p className="mt-1 text-sm text-red-500">{errors.message}</p>
               )}
-            </div>
+            </motion.div>
 
             {/* Submit */}
-            <button
+            <motion.button
+              variants={fieldVariants}
               type="submit"
               disabled={isSubmitting}
               className="btn w-full cursor-pointer bg-cyan-600 text-white hover:bg-cyan-600/80 disabled:bg-cyan-400/50"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
-            </button>
+            </motion.button>
 
             {status.state === 'submitted' && (
               <div role="status" aria-live="polite">
@@ -269,7 +313,7 @@ const ConnectForm = () => {
                 <ErrorMessage message={status.error} />
               </div>
             )}
-          </form>
+          </motion.form>
         </div>
       </div>
     </motion.div>

@@ -129,7 +129,7 @@ const Intro = () => {
 
   return (
     <section
-      className="3xl:py-20 relative min-h-[80vh] overflow-hidden py-10 lg:min-h-screen"
+      className="3xl:py-20 relative min-h-[80vh] overflow-hidden py-0 lg:min-h-screen"
       style={{
         paddingTop: 'clamp(2rem, 7rem, 8rem)',
         paddingBottom: 'clamp(2rem, 2vw, 8rem)',
@@ -197,7 +197,7 @@ const Intro = () => {
       <div className="from-primary/20 before:bg-primary/40 pointer-events-none absolute inset-0 z-0 bg-linear-to-b to-transparent before:absolute before:top-10 before:left-1/2 before:h-225 before:w-225 before:-translate-x-1/2 before:rounded-full before:opacity-20 before:blur-[120px] before:content-['']" />
 
       {/* Content with a higher z-index (above the grid) */}
-      <div className="3xl:py-15 relative z-10 mx-auto max-w-4xl px-4 py-0 pb-5 text-center">
+      <div className="4xl:py-15 relative z-10 mx-auto max-w-4xl px-4 py-0 pb-5 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}

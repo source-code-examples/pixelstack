@@ -83,7 +83,7 @@ const FooterSocialLinks = () => {
         </span>
       </Link>
 
-      <Link
+      {/* <Link
         href="https://www.instagram.com/"
         target="_blank"
         className="group relative text-2xl text-gray-600 opacity-70 transition duration-300 hover:opacity-100 dark:text-gray-300"
@@ -93,7 +93,7 @@ const FooterSocialLinks = () => {
           Instagram
           <span className="absolute top-full left-1/2 -translate-x-1/2 border-7 border-transparent border-t-gray-900 dark:border-t-yellow-100"></span>
         </span>
-      </Link>
+      </Link> */}
 
       <Link
         href="https://www.wearedevelopers.com/"
@@ -113,7 +113,7 @@ const FooterSocialLinks = () => {
         </span>
       </Link>
 
-      <Link
+      {/* <Link
         href="https://www.get-in-it.de/"
         target="_blank"
         className="group relative text-gray-600 transition duration-300 dark:text-gray-300"
@@ -129,14 +129,6 @@ const FooterSocialLinks = () => {
           get-in-it
           <span className="absolute top-full left-1/2 -translate-x-1/2 border-7 border-transparent border-t-gray-900 dark:border-t-yellow-100"></span>
         </span>
-      </Link>
-
-      {/* <Link
-        href="https://www.tiktok.com/"
-        target="_blank"
-        className="text-2xl text-gray-600 opacity-70 transition duration-300 hover:opacity-100 dark:text-gray-300"
-      >
-        <BsTiktok />
       </Link> */}
     </div>
   )

@@ -202,7 +202,7 @@ const Intro = () => {
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="3xl:mb-8 mb-4 flex justify-center"
+          className="4xl:mb-8 mb-4 flex justify-center"
         >
           <div className="relative h-42 w-42 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
             <Image
@@ -251,7 +251,7 @@ const Intro = () => {
           initial={{ opacity: 0, y: 120 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8 }}
-          className="3xl:mt-12 mt-8 flex flex-col justify-center gap-4 sm:flex-row"
+          className="4xl:mt-12 mt-8 flex flex-col justify-center gap-4 sm:flex-row"
         >
           <Link
             href="/portfolio"

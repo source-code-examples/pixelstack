@@ -10,6 +10,9 @@
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, Helvetica, Arial, sans-serif;
+
+  --breakpoint-3xl: 1500px;
+  --breakpoint-4xl: 1800px;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

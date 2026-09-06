@@ -129,9 +129,9 @@ const Intro = () => {
 
   return (
     <section
-      className="relative min-h-[80vh] overflow-hidden py-10 lg:min-h-screen"
+      className="3xl:py-20 relative min-h-[80vh] overflow-hidden py-10 lg:min-h-screen"
       style={{
-        paddingTop: 'clamp(2rem, 8vw, 8rem)',
+        paddingTop: 'clamp(2rem, 7rem, 8rem)',
         paddingBottom: 'clamp(2rem, 2vw, 8rem)',
       }}
       onMouseEnter={() => setIsHovering(true)}
@@ -197,22 +197,29 @@ const Intro = () => {
       <div className="from-primary/20 before:bg-primary/40 pointer-events-none absolute inset-0 z-0 bg-linear-to-b to-transparent before:absolute before:top-10 before:left-1/2 before:h-225 before:w-225 before:-translate-x-1/2 before:rounded-full before:opacity-20 before:blur-[120px] before:content-['']" />
 
       {/* Content with a higher z-index (above the grid) */}
-      <div className="relative z-10 mx-auto max-w-4xl px-4 py-10 text-center">
+      <div className="3xl:py-15 relative z-10 mx-auto max-w-4xl px-4 py-0 pb-5 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="mb-8 flex justify-center"
+          className="3xl:mb-8 mb-4 flex justify-center"
         >
           <div className="relative h-42 w-42 overflow-hidden rounded-full shadow-xl ring-4 ring-white/40 dark:ring-cyan-700/70">
             <Image
-              src="/avatars/profile-avatar7.png"
+              src={
+                isDark
+                  ? '/avatars/profile-avatar10.png'
+                  : '/avatars/profile-avatar3.png'
+              }
               alt="profile picture"
+              // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               fill
               className="object-cover"
               style={{
                 objectPosition: 'center',
-                transform: 'scale(1.6) translateX(-23px) translateY(16%)',
+                transform: isDark
+                  ? 'scale(1.5) translateX(-10px) translateY(16%)'
+                  : 'scale(1.5) translateX(-5px) translateY(16%)',
               }}
               loading="eager"
               priority
@@ -234,7 +241,7 @@ const Intro = () => {
           initial={{ opacity: 0, y: 20, x: -120 }}
           animate={{ opacity: 1, y: 0, x: 0 }}
           transition={{ duration: 1.4 }}
-          className="mx-auto mt-6 max-w-2xl text-xl text-gray-600 dark:text-gray-300"
+          className="mx-auto mt-5 max-w-2xl text-xl text-gray-600 dark:text-gray-300"
         >
           Full Stack Developer & Designer — building elegant, fast and modern
           web applications.
@@ -244,11 +251,11 @@ const Intro = () => {
           initial={{ opacity: 0, y: 120 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8 }}
-          className="mt-10 flex flex-col justify-center gap-4 sm:flex-row"
+          className="3xl:mt-12 mt-8 flex flex-col justify-center gap-4 sm:flex-row"
         >
           <Link
             href="/portfolio"
-            className="w-full rounded-lg bg-amber-600/90 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600 sm:w-auto"
+            className="w-full rounded-lg bg-amber-600 px-8 py-3 font-bold text-white transition-colors hover:bg-cyan-600 sm:w-auto"
           >
             View Portfolio
           </Link>

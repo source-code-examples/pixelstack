@@ -15,6 +15,7 @@
 [![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/)
 [![Playwright](https://img.shields.io/badge/Playwright-2EADEE?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Error Tracking](https://img.shields.io/badge/Error_Tracking-Sentry-362D59?style=for-the-badge&logo=sentry&logoColor=white)](https://sentry.io)
+[![CI](https://img.shields.io/github/actions/workflow/status/wkleus/pixelstack/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/wkleus/pixelstack/actions/workflows/ci.yml)
 [![Status: Deployed](https://img.shields.io/badge/Status-Deployed-22c55e?style=for-the-badge)](/)
 [![Status: Live](https://img.shields.io/badge/Status-Live-22c55e?style=for-the-badge)](https://pixelstack.me)
 
@@ -111,6 +112,7 @@ The project is deployed on Vercel and IONOS.
 - [Testing](#testing)
 - [Analytics](#analytics)
 - [Error Tracking](#error-tracking)
+- [Security Headers](#security-headers)
 - [Upcoming Work](#upcoming-work)
 - [License](#license)
 
@@ -160,6 +162,7 @@ The project is deployed on Vercel and IONOS.
 | Testing          | Jest, Playwright                                  |
 | Analytics        | Self-hosted Umami (Vercel + Neon Postgres)        |
 | Error Tracking   | Sentry                                            |
+| Security         | CSP, HSTS, X-Frame-Options via `next.config.ts`   |
 | Deployment       | Vercel (custom domain via IONOS DNS)              |
 
 ---
@@ -519,6 +522,8 @@ Since `pixelstack.me` (IONOS) is a custom domain pointing to the same Vercel dep
 
 ---
 
+## Error Tracking
+
 Runtime errors are tracked via **[Sentry](https://sentry.io)**, wired into all three Next.js runtimes:
 
 - Client-side errors (`sentry.client.config.ts`)
@@ -527,6 +532,17 @@ Runtime errors are tracked via **[Sentry](https://sentry.io)**, wired into all t
 - Unhandled request errors are captured centrally via `instrumentation.ts`
 
 Sentry is disabled outside of `NODE_ENV=production` to keep local/CI noise out of the dashboard.
+
+---
+
+## Security Headers
+
+`next.config.ts` sets a small set of HTTP security headers on every route, scoped to what the app actually needs rather than copied wholesale:
+
+- **`X-Frame-Options: DENY`** — blocks the site from being embedded in an `<iframe>` elsewhere, protecting the `/admin` login from clickjacking
+- **`X-Content-Type-Options: nosniff`** — prevents the browser from guessing content types
+- **`Strict-Transport-Security`** — enforces HTTPS for a year, including subdomains
+- **`Content-Security-Policy`** — restricts scripts/styles/images/connections to `'self'` plus the two third-party origins actually in use (Umami analytics, Sentry error reporting); `'unsafe-eval'` is only permitted in development, where React/Turbopack need it for debugging
 
 ---
 

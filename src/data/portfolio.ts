@@ -244,6 +244,7 @@ export const portfolios: Portfolio[] = [
         4. Enabling the AI assistant to reliably detect user intent and trigger the correct action (contact form prefill) rather than just answering questions
         5. Protecting a public AI endpoint from abuse while keeping responses fast
         6. Safely rendering blog post content (stored as HTML in the database) on the public site without introducing XSS risks or broken layout
+        7. Rolling out a Content-Security-Policy without breaking React's development-mode tooling (which relies on eval() for debugging) or third-party scripts (analytics, error reporting) already in use
         Solution & Technologies Used
         I built a full-stack architecture on top of Next.js:
         - Frontend: Next.js 16 (App Router) + TypeScript 5 (strict mode), React 19, Tailwind CSS 4, Framer Motion
@@ -254,6 +255,9 @@ export const portfolios: Portfolio[] = [
         - Content: authored in a plain textarea in the admin dashboard, stored as HTML in PostgreSQL and rendered on the public site via dangerouslySetInnerHTML
         - Email: Resend for contact form delivery (with auto-reply) and newsletter admin notifications, both with server-side validation, XSS sanitization, and rate limiting
         - Testing: Jest (unit + API tests) and Playwright (E2E), covering hook logic, route validation, and full browser flows
+        - CI/CD: GitHub Actions runs lint and the unit/API test suite on every push and pull request to main, catching regressions before they reach production
+        - Observability: Sentry error tracking wired into all three Next.js runtimes (client, server, edge) via instrumentation.ts, with alerting on high-priority issues
+        - Security: HTTP security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options) applied via next.config.ts, with the Content-Security-Policy scoped to the app's actual third-party origins rather than broadly permissive defaults
         - Analytics: self-hosted Umami (separate Vercel deployment + Neon Postgres), tracking visits across the custom domain and the Vercel URL under one unified dashboard; all-time stats are also surfaced directly in the admin dashboard via a server-side fetch authenticated against Umami's login endpoint
 
         A key feature is the AI assistant's contact form prefill via Tool Calling: DeepSeek analyzes the user's message, decides whether to call a prefill_contact_form tool with a topic (job, project, collaboration, quote, feedback, other), and the chat widget then navigates to /connect?topic=[topic], where the contact form reads the URL parameter and pre-selects the matching option with a visual indicator — turning a conversational request into a ready-to-submit form without manual selection.
@@ -293,6 +297,8 @@ export const portfolios: Portfolio[] = [
       'react-markdown + remark-gfm (AI chat widget)',
       'Jest (unit & API tests)',
       'Playwright (E2E tests)',
+      'Sentry (error tracking)',
+      'GitHub Actions (CI/CD)',
       'Vercel (deployment)',
       'IONOS (custom domain)',
     ],

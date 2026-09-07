@@ -113,6 +113,8 @@ The project is deployed on Vercel and IONOS.
 - [Analytics](#analytics)
 - [Error Tracking](#error-tracking)
 - [Security Headers](#security-headers)
+- [Accessibility & SEO](#accessibility--seo)
+- [Environment Variables](#environment-variables)
 - [Upcoming Work](#upcoming-work)
 - [License](#license)
 
@@ -140,7 +142,7 @@ The project is deployed on Vercel and IONOS.
 - **Contact form prefill** via AI assistant — the AI automatically detects the user's intent and pre-selects the appropriate topic when opening the contact form
 - **Mobile navigation** with hamburger menu
 - **Footer** with social links and branding
-- **Imprint** with privacy policy and legal informations
+- **Imprint** with privacy policy and legal information
 - **Custom 404 Not Found Page**
 
 ### Tech Stack
@@ -150,14 +152,15 @@ The project is deployed on Vercel and IONOS.
 | Framework        | Next.js 16 (App Router)                           |
 | Language         | TypeScript 5 (strict mode)                        |
 | UI               | React 19, Tailwind CSS 4, Framer Motion           |
-| Icons            | Heroicons, React Icons                            |
+| Icons            | Heroicons, React Icons, Lucide React              |
 | Database         | PostgreSQL (hosted on [Neon](https://neon.tech))  |
 | ORM              | Prisma 7 (driver adapter via `pg`)                |
 | Auth             | Auth.js v5 (Credentials, single admin account)    |
 | Password Hashing | bcryptjs                                          |
 | Email            | Resend SDK                                        |
 | AI Model         | DeepSeek API (OpenAI-compatible)                  |
-| AI Capabilities  | Tool Calling, Intent Detection                    |
+| AI Capabilities  | Tool Calling, Intent Detection, Streaming (SSE)   |
+| Rate Limiting    | Upstash Redis (`@upstash/ratelimit`)              |
 | Markdown         | react-markdown + remark-gfm (AI chat widget only) |
 | Testing          | Jest, Playwright                                  |
 | Analytics        | Self-hosted Umami (Vercel + Neon Postgres)        |
@@ -191,9 +194,9 @@ The project is deployed on Vercel and IONOS.
 │   │   │   │   └── 📄 PostForm.tsx # Shared create/edit form (HTML textarea)
 │   │   │   └── 📄 actions.ts       # Server Actions: createPost, updatePost, deletePost
 │   │   ├── 📂 api
-│   │   │   ├── 📂 auth              # Auth.js route handler
+│   │   │   ├── 📂 auth             # Auth.js route handler
 │   │   │   ├── 📂 newsletter       # Newsletter subscription endpoint
-│   │   │   ├── 📂 agent           # AI assistant endpoint (DeepSeek)
+│   │   │   ├── 📂 agent            # AI assistant endpoint (DeepSeek)
 │   │   │   └── 📂 connect          # Contact form API endpoint with email
 │   │   ├── 📂 components           # Reusable UI components
 │   │   │   ├── 📂 Agent            # AI assistant chat widget
@@ -246,9 +249,9 @@ The project is deployed on Vercel and IONOS.
 ├── 📄 package.json
 ├── 📂 .github
 │   └── 📂 workflows
-│       └── 📄 ci.yml            # Lint + unit tests on push/PR
+│       └── 📄 ci.yml               # Lint + unit tests on push/PR
 │
-├── 📄 instrumentation.ts        # Loads Sentry config per runtime
+├── 📄 instrumentation.ts           # Loads Sentry config per runtime
 ├── 📄 sentry.client.config.ts
 ├── 📄 sentry.server.config.ts
 ├── 📄 sentry.edge.config.ts
@@ -332,6 +335,20 @@ The AI assistant uses a structured system prompt (`agentContext.ts`) containing 
 
 The full conversation history is included in each API call — giving the assistant memory of the current session.
 
+### Streaming & Tool Calling Flow
+
+Responses are streamed via **Server-Sent Events (SSE)** for a responsive typing experience.
+
+When the model decides to call a tool:
+
+1. DeepSeek streams tool-call fragments (name + arguments).
+2. The API accumulates them and executes the tool (`prefill_contact_form`).
+3. A second (non-streaming) call is made with the tool result.
+4. The final reply + a special `tool_action` event is sent to the client.
+5. The chat widget navigates to `/connect?topic=...` and the form pre-selects the topic.
+
+This keeps the UI snappy while still allowing reliable tool execution.
+
 ### Contact Form Prefill via Tool Calling
 
 The AI assistant has a powerful feature: intelligent contact form prefill. When a user expresses interest in contacting the developer, the AI automatically detects the intent, calls the prefill_contact_form tool, and opens the contact form with the correct topic pre-selected.
@@ -398,16 +415,6 @@ AI Assistant: "I've just opened the contact form with "Job Offer" pre-selected f
 | `/connect`     | "Need help filling out the contact form?"                                         |
 | `/profile`     | "Want to know more about the developer's background or certifications?"           |
 
-### Environment Variables
-
-```bash
-DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxx
-DEEPSEEK_MODEL=deepseek-v4-flash
-NEXT_PUBLIC_SENTRY_DSN=https://xxxxxxxx@xxxxxxx.ingest.sentry.io/xxxxxxx
-```
-
-Optional, for readable stack traces via source map uploads (see [Sentry docs](https://docs.sentry.io/platforms/javascript/guides/nextjs/sourcemaps/)): `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`.
-
 ### Example questions
 
 **AI assistant answers to:**
@@ -420,7 +427,7 @@ Optional, for readable stack traces via source map uploads (see [Sentry docs](ht
 
 **Trigger the pre-filling of the contact form via tool calling**:
 
-- "I want ooffer you a job" → prefills contact form with "Job Offer"
+- "I want to offer you a job" → prefills contact form with "Job Offer"
 - "How much do you charge?" → prefills contact form with "Quote Request"
 
 ## Contact Form & Email
@@ -520,6 +527,8 @@ Since `pixelstack.me` (IONOS) is a custom domain pointing to the same Vercel dep
 - Tracks visitors, page views, sessions, and referrers in real time
 - All-time visitor stats are also surfaced directly in the admin dashboard via a server-side widget that authenticates against Umami's login endpoint (self-hosted Umami has no persistent API keys)
 
+> **Note:** Live visitor stats (all-time visitors / visits / views) are only visible inside the **Admin Dashboard** (`/admin/adminDashboard`). There is no public Umami dashboard link.
+
 ---
 
 ## Error Tracking
@@ -537,12 +546,71 @@ Sentry is disabled outside of `NODE_ENV=production` to keep local/CI noise out o
 
 ## Security Headers
 
-`next.config.ts` sets a small set of HTTP security headers on every route, scoped to what the app actually needs rather than copied wholesale:
+`next.config.ts` sets a focused set of HTTP security headers on every route:
 
-- **`X-Frame-Options: DENY`** — blocks the site from being embedded in an `<iframe>` elsewhere, protecting the `/admin` login from clickjacking
-- **`X-Content-Type-Options: nosniff`** — prevents the browser from guessing content types
-- **`Strict-Transport-Security`** — enforces HTTPS for a year, including subdomains
-- **`Content-Security-Policy`** — restricts scripts/styles/images/connections to `'self'` plus the two third-party origins actually in use (Umami analytics, Sentry error reporting); `'unsafe-eval'` is only permitted in development, where React/Turbopack need it for debugging
+- **`X-Frame-Options: DENY`** — blocks the site from being embedded in an `<iframe>` (protects `/admin` from clickjacking)
+- **`X-Content-Type-Options: nosniff`** — prevents MIME-type sniffing
+- **`Strict-Transport-Security`** — enforces HTTPS for one year (including subdomains)
+- **`Content-Security-Policy`** — restricts scripts, styles, images and connections to `'self'` plus the two third-party origins actually used (Umami analytics + Sentry). `'unsafe-eval'` is only allowed in development.
+
+---
+
+## Accessibility & SEO
+
+### Accessibility
+
+- Semantic HTML and native interactive elements throughout
+- `aria-label` on icon-only controls (theme toggle, chat widget, mobile menu …)
+- `aria-invalid` on contact form fields tied to real-time validation
+- `aria-live="polite"` / `"assertive"` on success/error messages
+- `aria-current="page"` in navigation, `aria-hidden="true"` on decorative elements
+
+### SEO
+
+- Open Graph metadata (title, description, type) globally and per blog post via `generateMetadata`
+- `metadataBase` configured for correct absolute URLs in social previews
+
+---
+
+## Environment Variables
+
+Create a `.env.local` (or set the values in the Vercel dashboard).
+**Never commit real secrets.**
+
+### Required
+
+| Variable                   | Description                                                              |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `DATABASE_URL`             | Neon PostgreSQL connection string                                        |
+| `AUTH_SECRET`              | Secret used by Auth.js to sign JWT sessions                              |
+| `ADMIN_EMAIL`              | Email address of the single admin account                                |
+| `ADMIN_PASSWORD_HASH_B64`  | Base64-encoded bcrypt hash of the admin password (see explanation below) |
+| `RESEND_API_KEY`           | Resend API key                                                           |
+| `RESEND_FROM`              | Verified sender address (e.g. `PixelStack <noreply@yourdomain.com>`)     |
+| `RESEND_TO`                | Inbox that receives contact form & newsletter notifications              |
+| `DEEPSEEK_API_KEY`         | DeepSeek API key                                                         |
+| `UPSTASH_REDIS_REST_URL`   | Upstash Redis REST URL (used for rate limiting)                          |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST token                                                 |
+
+### Optional
+
+| Variable                    | Description                                                          |
+| --------------------------- | -------------------------------------------------------------------- |
+| `DEEPSEEK_MODEL`            | Model name (default: `deepseek-v4-flash`)                            |
+| `NEXT_PUBLIC_SENTRY_DSN`    | Sentry DSN (client-side error tracking)                              |
+| `SENTRY_ORG`                | Sentry organization (for source map uploads)                         |
+| `SENTRY_PROJECT`            | Sentry project name                                                  |
+| `SENTRY_AUTH_TOKEN`         | Sentry auth token for source maps                                    |
+| `NEXT_PUBLIC_IONOS_WEBSITE` | Base URL used for `metadataBase` / Open Graph                        |
+| `AGENT_CONTEXT_1` … `_4`    | Production system prompt for the AI (split because of length limits) |
+| `STREAM_DELAY_MS`           | Artificial delay (ms) for AI streaming – useful only in development  |
+
+> **Why Base64 for the admin password hash?**
+> A raw bcrypt hash contains `$` characters that get corrupted by `.env` expansion and some shells. Base64 is safe to copy-paste into `.env` and Vercel. The hash is decoded back at runtime in `src/auth.ts`.
+
+> In **development** the AI system prompt is read from `agent-prompt.txt`
+> (this file is gitignored and never committed).
+> In **production** it is assembled from the `AGENT_CONTEXT_*` environment variables.
 
 ---
 
@@ -557,6 +625,8 @@ Sentry is disabled outside of `NODE_ENV=production` to keep local/CI noise out o
 ### More Features Planned
 
 - Language Switcher (EN/DE)
+- `sitemap.xml` + `robots.txt` for search engine indexing
+- Open Graph preview images for richer social media link previews
 
 ---
 
